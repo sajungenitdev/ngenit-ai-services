@@ -1,0 +1,112 @@
+/* TrustBar.module.css */
+
+.trustBar {
+    background: var(--navy-mid);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 20px 0;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.trustBarInner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.trustBarText {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+.partnerLogos {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.partnerLogo {
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 4px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    cursor: default;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.partnerLogo:hover {
+    color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Marquee effect for mobile */
+@media (max-width: 768px) {
+    .trustBarInner {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .trustBarText {
+        font-size: 0.7rem;
+    }
+
+    .partnerLogos {
+        gap: 16px;
+        justify-content: center;
+    }
+
+    .partnerLogo {
+        font-size: 0.7rem;
+        padding: 3px 10px;
+    }
+}
+
+/* Optional: Scrolling animation for very small screens */
+@media (max-width: 480px) {
+    .partnerLogos {
+        display: flex;
+        flex-wrap: nowrap;
+        animation: scrollLogos 20s linear infinite;
+        width: max-content;
+    }
+
+    .trustBarInner {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .partnerLogo {
+        flex-shrink: 0;
+    }
+
+    @keyframes scrollLogos {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+}

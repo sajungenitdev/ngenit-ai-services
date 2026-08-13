@@ -1,0 +1,357 @@
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(13, 27, 62, 0.96);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbarScrolled {
+    background: rgba(13, 27, 62, 0.99);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.navInner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+}
+
+.navLogo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-plus-jakarta), sans-serif;
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: #ffffff !important;
+    text-decoration: none;
+}
+
+.logoBadge {
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #ffffff !important;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.logoText {
+    color: #ffffff !important;
+}
+
+.navMenu {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navItem {
+    position: relative;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+}
+
+.navLink:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.arrow {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s;
+    opacity: 0.6;
+}
+
+.navItem:hover .arrow {
+    transform: rotate(180deg);
+}
+
+.navCta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btnConsult {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    background: var(--cyan);
+    color: var(--navy);
+    box-shadow: 0 4px 20px rgba(0, 194, 203, 0.3);
+    text-decoration: none;
+}
+
+.btnConsult:hover {
+    background: var(--cyan-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0, 194, 203, 0.4);
+}
+
+.navToggle {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    background: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+
+.navToggle:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.overlayOpen {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Mobile Drawer */
+.mobileDrawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 400px;
+    height: 100%;
+    background: #0D1B3E;
+    z-index: 1002;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobileDrawerOpen {
+    right: 0;
+}
+
+.drawerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.drawerLogo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-plus-jakarta), sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #ffffff !important;
+    text-decoration: none;
+}
+
+.drawerClose {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: transparent;
+    color: #ffffff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+
+.drawerClose:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.drawerBody {
+    padding: 16px 24px 24px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.drawerLink {
+    display: block;
+    padding: 14px 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.drawerLink:hover {
+    color: #ffffff;
+    padding-left: 8px;
+}
+
+.drawerAccordion {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.drawerAccordionTrigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.drawerAccordionTrigger:hover {
+    color: #ffffff;
+}
+
+.drawerAccordionIcon {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.drawerAccordionContent {
+    padding-left: 12px;
+    margin-bottom: 8px;
+}
+
+.drawerSubLink {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.drawerSubLink:last-child {
+    border-bottom: none;
+}
+
+.drawerSubLink:hover {
+    color: #ffffff;
+    padding-left: 4px;
+}
+
+.drawerSubIcon {
+    font-size: 1rem;
+}
+
+.drawerFooter {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.drawerConsultBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    background: var(--cyan);
+    color: var(--navy);
+    box-shadow: 0 4px 20px rgba(0, 194, 203, 0.3);
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.drawerConsultBtn:hover {
+    background: var(--cyan-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0, 194, 203, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navMenu {
+        display: none;
+    }
+
+    .navToggle {
+        display: flex;
+    }
+}
+
+/* Scrollbar styling for drawer */
+.mobileDrawer::-webkit-scrollbar {
+    width: 4px;
+}
+
+.mobileDrawer::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.mobileDrawer::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
+.mobileDrawer::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}

@@ -1,26 +1,222 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --navy: #0D1B3E;
+    --navy-mid: #1B2A5E;
+    --navy-light: #253570;
+    --blue: #1E5FD4;
+    --cyan: #00C2CB;
+    --cyan-light: #00E5EE;
+    --white: #FFFFFF;
+    --off-white: #F5F7FA;
+    --grey-100: #EEF1F6;
+    --grey-200: #D6DCE8;
+    --grey-400: #8A96B0;
+    --grey-600: #4A5568;
+    --grey-800: #1A202C;
+    --green-wa: #25D366;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .text-navy {
+    color: #0D1B3E;
+  }
+
+  .text-navy-mid {
+    color: #1B2A5E;
+  }
+
+  .text-cyan {
+    color: #00C2CB;
+  }
+
+  .text-cyan-light {
+    color: #00E5EE;
+  }
+
+  .text-grey-400 {
+    color: #8A96B0;
+  }
+
+  .bg-navy {
+    background-color: #0D1B3E;
+  }
+
+  .bg-navy-mid {
+    background-color: #1B2A5E;
+  }
+
+  .bg-cyan {
+    background-color: #00C2CB;
+  }
+
+  .bg-cyan-light {
+    background-color: #00E5EE;
+  }
+
+  .bg-off-white {
+    background-color: #F5F7FA;
+  }
+
+  .bg-grey-100 {
+    background-color: #EEF1F6;
+  }
+
+  .border-grey-100 {
+    border-color: #EEF1F6;
+  }
+
+  .font-plus-jakarta {
+    font-family: var(--font-plus-jakarta), sans-serif;
+  }
+
+  .font-inter {
+    font-family: var(--font-inter), sans-serif;
+  }
+
+  /* Float Animations - Same as Original */
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px) scale(1);
+    }
+
+    50% {
+      transform: translateY(-30px) scale(1.05);
+    }
+  }
+
+  @keyframes float-delay {
+
+    0%,
+    100% {
+      transform: translateY(0px) scale(1);
+    }
+
+    50% {
+      transform: translateY(-30px) scale(1.05);
+    }
+  }
+
+  @keyframes float-delay-2 {
+
+    0%,
+    100% {
+      transform: translateY(0px) scale(1);
+    }
+
+    50% {
+      transform: translateY(-30px) scale(1.05);
+    }
+  }
+
+  @keyframes float-reverse {
+
+    0%,
+    100% {
+      transform: translateY(0px) scale(1);
+    }
+
+    50% {
+      transform: translateY(-30px) scale(1.05);
+    }
+  }
+
+  @keyframes pulse {
+
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.5;
+      transform: scale(1.5);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delay {
+    animation: float-delay 8s ease-in-out infinite -3s;
+  }
+
+  .animate-float-delay-2 {
+    animation: float-delay-2 7s ease-in-out infinite -6s;
+  }
+
+  .animate-float-reverse {
+    animation: float-reverse 7s ease-in-out infinite reverse;
+  }
+
+  .animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .container {
+      padding: 0 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 16px;
+    }
+  }
+}
+/* Animated Grid Pattern */
+@keyframes grid-scroll {
+    0% {
+        background-position: 0px 0px;
+    }
+    100% {
+        background-position: 60px 60px;
+    }
+}
+
+.animate-grid-scroll {
+    animation: grid-scroll 20s linear infinite;
+}
+
+/* Optional: Diagonal grid animation */
+@keyframes grid-scroll-diagonal {
+    0% {
+        background-position: 0px 0px;
+    }
+    100% {
+        background-position: 60px 60px;
+    }
+}
+
+.animate-grid-scroll-diagonal {
+    animation: grid-scroll-diagonal 30s linear infinite;
+}
+
+/* Optional: Slow scroll with pulse */
+@keyframes grid-scroll-pulse {
+    0% {
+        background-position: 0px 0px;
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        background-position: 60px 60px;
+        opacity: 0.5;
+    }
+}
+
+.animate-grid-scroll-pulse {
+    animation: grid-scroll-pulse 25s ease-in-out infinite;
 }
