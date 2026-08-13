@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { SERVICES, INDUSTRIES } from "@/lib/data";
-import AiServicesMenus from "../NavBarMenus/AiServicesMenus";
-import IndustrialMenus from "../NavBarMenus/IndustrialMenus";
 import styles from "./Header.module.css";
+import AiServicesMenus from "./NavBarMenus/AiServicesMenus";
+import IndustrialMenus from "./NavBarMenus/IndustrialMenus";
 
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
