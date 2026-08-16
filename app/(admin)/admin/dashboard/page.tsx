@@ -12,7 +12,7 @@ import {
     Phone,
     MapPin
 } from "lucide-react";
-import StatsCard from "@/components/admin/StatsCard";
+import StatsCard from "@/components/Admin/StatsCard";
 
 interface Stats {
     total: number;

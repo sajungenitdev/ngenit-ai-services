@@ -14,9 +14,9 @@ import {
     GripVertical,
     RefreshCw,
 } from "lucide-react";
-import RichTextEditor from "@/components/admin/RichTextEditor";
 import { getWhyNgen, updateWhyNgen, resetWhyNgen } from "@/services/whyNgenApi";
 import { WhyNgenData, WhyFeature } from "@/types/admin/whyNgen";
+import RichTextEditor from "@/components/admin/RichTextEditor";
 
 // ============================================================
 // DEFAULT DATA

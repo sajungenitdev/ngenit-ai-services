@@ -12,10 +12,10 @@ import {
     GripVertical,
     RefreshCw,
 } from "lucide-react";
-import RichTextEditor from "@/components/admin/RichTextEditor";
 import { getAboutPage, updateAboutPage, resetAboutPage } from "@/services/aboutPageApi";
 import { AboutPageData, Milestone, Value, Office } from "@/types/admin/aboutPage";
 import toast from 'react-hot-toast';
+import RichTextEditor from "@/components/admin/RichTextEditor";
 
 // ============================================================
 // DEFAULT DATA

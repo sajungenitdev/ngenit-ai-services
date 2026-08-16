@@ -14,9 +14,9 @@ import {
     GripVertical,
     RefreshCw,
 } from "lucide-react";
-import RichTextEditor from "@/components/admin/RichTextEditor";
 import { getIndustryById, updateIndustry } from "@/services/industryApi";
 import { IndustryData } from "@/types/admin/industry";
+import RichTextEditor from "@/components/admin/RichTextEditor";
 
 // ============================================================
 // TYPES
