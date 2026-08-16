@@ -1,18 +1,27 @@
 import mongoose from "mongoose";
 
+// Use environment variable with fallback for build time
 const MONGODB_URI = process.env.MONGODB_URI || "";
 
-if (!MONGODB_URI) {
-    throw new Error("Please define the MONGODB_URI environment variable");
-}
-
-let cached = global.mongoose;
-
-if (!cached) {
-    cached = global.mongoose = { conn: null, promise: null };
+// Only throw error if we're actually trying to connect
+// and not during build time
+if (!MONGODB_URI && typeof window === 'undefined' && process.env.NODE_ENV !== 'production') {
+    console.warn("⚠️ MONGODB_URI is not defined. Database features will not work.");
 }
 
 async function dbConnect() {
+    if (!MONGODB_URI) {
+        console.error("❌ MONGODB_URI is not defined. Cannot connect to database.");
+        return null;
+    }
+
+    // Rest of the function...
+    let cached = (global as any).mongoose;
+
+    if (!cached) {
+        cached = (global as any).mongoose = { conn: null, promise: null };
+    }
+
     if (cached.conn) {
         return cached.conn;
     }
