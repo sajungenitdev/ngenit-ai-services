@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { getWhyNgen, updateWhyNgen, resetWhyNgen } from "@/services/whyNgenApi";
 import { WhyNgenData, WhyFeature } from "@/types/admin/whyNgen";
-import RichTextEditor from "@/components/admin/RichTextEditor";
+import RichTextEditor from "@/components/Admin/RichTextEditor";
 
 // ============================================================
 // DEFAULT DATA

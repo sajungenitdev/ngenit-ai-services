@@ -12,7 +12,7 @@ import {
     Plus,
     Trash2,
 } from "lucide-react";
-import RichTextEditor from "@/components/admin/RichTextEditor";
+import RichTextEditor from "@/components/Admin/RichTextEditor";
 import { createSolution } from "@/services/solutionApi";
 import { SolutionData } from "@/types/admin/solution";
 

@@ -10,7 +10,7 @@ import {
     AlertCircle,
     CheckCircle,
 } from "lucide-react";
-import RichTextEditor from "@/components/admin/RichTextEditor";
+import RichTextEditor from "@/components/Admin/RichTextEditor";
 import { createUseCase } from "@/services/useCaseApi";
 import { getIndustries } from "@/services/industryApi";
 import { getServices } from "@/services/serviceApi";

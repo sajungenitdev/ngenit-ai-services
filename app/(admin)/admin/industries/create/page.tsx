@@ -13,7 +13,7 @@ import {
     Trash2,
     GripVertical,
 } from "lucide-react";
-import RichTextEditor from "@/components/admin/RichTextEditor";
+import RichTextEditor from "@/components/Admin/RichTextEditor";
 import { createIndustry } from "@/services/industryApi";
 // import { IndustryData } from "@/types/admin/industry";
 

@@ -15,7 +15,7 @@ import {
 import { getAboutPage, updateAboutPage, resetAboutPage } from "@/services/aboutPageApi";
 import { AboutPageData, Milestone, Value, Office } from "@/types/admin/aboutPage";
 import toast from 'react-hot-toast';
-import RichTextEditor from "@/components/admin/RichTextEditor";
+import RichTextEditor from "@/components/Admin/RichTextEditor";
 
 // ============================================================
 // DEFAULT DATA

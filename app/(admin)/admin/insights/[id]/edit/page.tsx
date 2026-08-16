@@ -10,7 +10,7 @@ import {
     AlertCircle,
     CheckCircle,
 } from "lucide-react";
-import RichTextEditor from "@/components/admin/RichTextEditor";
+import RichTextEditor from "@/components/Admin/RichTextEditor";
 import { getInsightById, updateInsight } from "@/services/insightApi";
 import toast from 'react-hot-toast';
 

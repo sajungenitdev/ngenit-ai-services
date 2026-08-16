@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { getCtaBanner, updateCtaBanner, resetCtaBanner } from "@/services/ctaBannerApi";
 import { CtaBannerData } from "@/types/admin/ctaBanner";
-import RichTextEditor from "@/components/admin/RichTextEditor";
+import RichTextEditor from "@/components/Admin/RichTextEditor";
 
 // ============================================================
 // DEFAULT DATA

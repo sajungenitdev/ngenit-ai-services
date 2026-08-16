@@ -14,7 +14,7 @@ import {
     CheckCircle,
     RefreshCw,
 } from "lucide-react";
-import RichTextEditor from "@/components/admin/RichTextEditor";
+import RichTextEditor from "@/components/Admin/RichTextEditor";
 import { getServiceById, updateService } from "@/services/serviceApi";
 import { ServiceData } from "@/types/admin/service";
 
