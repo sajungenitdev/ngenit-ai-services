@@ -4,22 +4,12 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { getServices } from "@/services/serviceApi";
 import { getIndustries } from "@/services/industryApi";
+import type { ServiceData } from "@/types/admin/service";
+import type { IndustryData } from "@/types/admin/industry";
 
-interface Service {
-    _id: string;
-    name: string;
-    slug: string;
-    icon: string;
-    isActive: boolean;
-}
-
-interface Industry {
-    _id: string;
-    name: string;
-    slug: string;
-    icon: string;
-    isActive: boolean;
-}
+// Use the imported types
+type Service = ServiceData;
+type Industry = IndustryData;
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();

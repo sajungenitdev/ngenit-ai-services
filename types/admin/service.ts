@@ -2,6 +2,7 @@ export interface ServiceData {
     _id?: string;
     icon: string;
     name: string;
+    slug?: string;
     tagline: string;
     summary: string;
     description: string;
