@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import { createIndustry } from "@/services/industryApi";
-import { IndustryData } from "@/types/admin/industry";
+// import { IndustryData } from "@/types/admin/industry";
 
 // ============================================================
 // TYPES
