@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Sidebar from "@/components/Admin/Sidebar";
-import AdminHeader from "@/components/admin/AdminHeader";
+import AdminHeader from "@/components/Admin/AdminHeader";
 import AdminFooter from "@/components/Admin/AdminFooter";
 
 export default function AdminLayout({
