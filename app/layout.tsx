@@ -6,12 +6,12 @@ import ConditionalHeader from "@/components/shared/ConditionalHeader";
 import ConditionalFooter from "@/components/shared/ConditionalFooter";
 import { Toaster } from "react-hot-toast";
 
-// Font configuration
+// Font configuration - FIX: Disable preload for Vercel build
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
-  preload: true,
+  preload: false, // Changed from true to false
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
@@ -19,7 +19,7 @@ const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-plus-jakarta",
   display: "swap",
-  preload: true,
+  preload: false, // Changed from true to false
   weight: ["400", "500", "600", "700", "800"],
 });
 
@@ -149,36 +149,35 @@ export default function RootLayout({
     >
       <body suppressHydrationWarning>
         <ConditionalHeader />
-        <main>{children}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 5000,
-              style: {
-                background: '#363636',
-                color: '#fff',
-                padding: '16px',
-                borderRadius: '8px',
-              },
-              success: {
-                duration: 5000,
-                iconTheme: {
-                  primary: '#22c55e',
-                  secondary: '#fff',
-                },
-              },
-              error: {
-                duration: 6000,
-                iconTheme: {
-                  primary: '#ef4444',
-                  secondary: '#fff',
-                },
-              },
-            }}
-          />
-        </main>
+        <main>{children}</main>
         <ConditionalFooter />
         <FloatingButtons />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 5000,
+            style: {
+              background: '#363636',
+              color: '#fff',
+              padding: '16px',
+              borderRadius: '8px',
+            },
+            success: {
+              duration: 5000,
+              iconTheme: {
+                primary: '#22c55e',
+                secondary: '#fff',
+              },
+            },
+            error: {
+              duration: 6000,
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#fff',
+              },
+            },
+          }}
+        />
       </body>
     </html>
   );
