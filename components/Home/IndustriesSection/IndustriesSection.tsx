@@ -1,14 +1,36 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { INDUSTRIES } from "@/lib/data";
+import { useEffect, useRef, useState } from "react";
 import IndustryCard from "./IndustryCard";
 import Link from "next/link";
+import { getIndustries } from "@/services/industryApi";
+import { IndustryData } from "@/types/admin/industry";
 
 export default function IndustriesSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
+    const [industries, setIndustries] = useState<IndustryData[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        fetchIndustries();
+    }, []);
+
+    const fetchIndustries = async () => {
+        try {
+            setLoading(true);
+            const data = await getIndustries();
+            // Filter only active industries for frontend
+            setIndustries(data.filter(ind => ind.isActive !== false));
+        } catch (error) {
+            console.error("Error fetching industries:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (loading) return;
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -46,7 +68,20 @@ export default function IndustriesSection() {
                 observer.unobserve(sectionRef.current);
             }
         };
-    }, []);
+    }, [loading]);
+
+    if (loading) {
+        return (
+            <section className="py-24 md:py-32 bg-off-white" id="industries" ref={sectionRef}>
+                <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div className="text-center">
+                        <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
+                        <p className="text-grey-400 mt-4">Loading industries...</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section className="py-24 md:py-32 bg-off-white" id="industries" ref={sectionRef}>
@@ -65,15 +100,15 @@ export default function IndustriesSection() {
                     </p>
                 </div>
 
-                {/* Industry Cards Grid - Added items-stretch */}
+                {/* Industry Cards Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-stretch">
-                    {INDUSTRIES.map((industry) => (
+                    {industries.map((industry) => (
                         <div
-                            key={industry.id}
+                            key={industry._id}
                             className="industry-card-wrapper opacity-0 translate-y-[30px] transition-all duration-700 flex"
                         >
                             <IndustryCard
-                                id={industry.id}
+                                id={industry.slug || industry._id!}
                                 icon={industry.icon}
                                 name={industry.name}
                                 short={industry.short}

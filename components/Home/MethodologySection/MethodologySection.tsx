@@ -1,12 +1,39 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { METHODOLOGY_STEPS } from "@/lib/data";
+import { useEffect, useRef, useState } from "react";
+import { getMethodology } from "@/services/methodologyApi";
+import { MethodologyStep } from "@/types/admin/methodology";
 
 export default function MethodologySection() {
     const sectionRef = useRef<HTMLDivElement>(null);
+    const [steps, setSteps] = useState<MethodologyStep[]>([]);
+    const [loading, setLoading] = useState(true);
 
+    // ============================================================
+    // FETCH METHODOLOGY STEPS
+    // ============================================================
     useEffect(() => {
+        const fetchSteps = async () => {
+            try {
+                setLoading(true);
+                const data = await getMethodology();
+                setSteps(data);
+            } catch (error) {
+                console.error("Error fetching methodology:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSteps();
+    }, []);
+
+    // ============================================================
+    // SCROLL ANIMATION
+    // ============================================================
+    useEffect(() => {
+        if (loading) return;
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -42,8 +69,27 @@ export default function MethodologySection() {
                 observer.unobserve(sectionRef.current);
             }
         };
-    }, []);
+    }, [loading]);
 
+    // ============================================================
+    // LOADING STATE
+    // ============================================================
+    if (loading) {
+        return (
+            <section className="py-24 md:py-32 bg-white" id="methodology" ref={sectionRef}>
+                <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div className="text-center">
+                        <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
+                        <p className="text-grey-400 mt-4">Loading methodology...</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    // ============================================================
+    // RENDER
+    // ============================================================
     return (
         <section className="py-24 md:py-32 bg-white" id="methodology" ref={sectionRef}>
             <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
@@ -67,9 +113,9 @@ export default function MethodologySection() {
 
                     {/* Steps Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 relative z-10">
-                        {METHODOLOGY_STEPS.map((step) => (
+                        {steps.map((step) => (
                             <div
-                                key={step.number}
+                                key={step._id || step.number}
                                 className="step-item text-center opacity-0 translate-y-[30px] transition-all duration-700"
                             >
                                 {/* Circle with Icon */}

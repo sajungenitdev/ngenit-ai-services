@@ -1,12 +1,40 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { OUTCOMES } from "@/lib/data";
+import { useEffect, useRef, useState } from "react";
+import { getOutcomes } from "@/services/outcomeApi";
+import { OutcomeData } from "@/types/admin/outcome";
 
 export default function OutcomesSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
+    const [outcomes, setOutcomes] = useState<OutcomeData[]>([]);
+    const [loading, setLoading] = useState(true);
 
+    // ============================================================
+    // FETCH OUTCOMES
+    // ============================================================
     useEffect(() => {
+        const fetchOutcomes = async () => {
+            try {
+                setLoading(true);
+                const data = await getOutcomes();
+                // Only show active outcomes on frontend
+                setOutcomes(data.filter(o => o.isActive !== false));
+            } catch (error) {
+                console.error("Error fetching outcomes:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchOutcomes();
+    }, []);
+
+    // ============================================================
+    // SCROLL ANIMATION
+    // ============================================================
+    useEffect(() => {
+        if (loading) return;
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -44,8 +72,27 @@ export default function OutcomesSection() {
                 observer.unobserve(sectionRef.current);
             }
         };
-    }, []);
+    }, [loading]);
 
+    // ============================================================
+    // LOADING STATE
+    // ============================================================
+    if (loading) {
+        return (
+            <section className="py-24 md:py-32 bg-navy" ref={sectionRef}>
+                <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div className="text-center">
+                        <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
+                        <p className="text-white/60 mt-4">Loading outcomes...</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    // ============================================================
+    // RENDER
+    // ============================================================
     return (
         <section className="py-24 md:py-32 bg-navy" ref={sectionRef}>
             <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
@@ -64,9 +111,9 @@ export default function OutcomesSection() {
 
                 {/* Outcomes Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/5">
-                    {OUTCOMES.map((outcome, index) => (
+                    {outcomes.map((outcome, index) => (
                         <div
-                            key={index}
+                            key={outcome._id || index}
                             className="outcome-item bg-white/5 p-9 transition-all duration-300 hover:bg-cyan/10 opacity-0 translate-y-[30px]"
                         >
                             <div className="text-4xl mb-4">{outcome.icon}</div>

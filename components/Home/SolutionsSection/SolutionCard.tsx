@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 interface SolutionCardProps {
     tag: string;
     name: string;
@@ -43,12 +45,12 @@ export default function SolutionCard({ tag, name, desc, tags, footer }: Solution
                 <span className="text-[0.8rem] text-grey-400">
                     {footer}
                 </span>
-                <a
+                <Link
                     href="/contact"
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[8px] font-semibold text-[0.875rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-navy-mid text-white hover:bg-navy-light hover:-translate-y-0.5"
                 >
                     Discuss →
-                </a>
+                </Link>
             </div>
         </div>
     );

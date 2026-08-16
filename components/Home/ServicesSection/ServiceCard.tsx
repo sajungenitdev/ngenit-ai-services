@@ -23,7 +23,7 @@ export default function ServiceCard({ id, icon, name, summary }: ServiceCardProp
         {icon}
       </div>
 
-      {/* Content - grows to fill space */}
+      {/* Content */}
       <div className="flex-1 flex flex-col">
         <h3 className="text-[1rem] font-semibold text-navy mb-2.5 font-plus-jakarta">
           {name}
@@ -33,7 +33,7 @@ export default function ServiceCard({ id, icon, name, summary }: ServiceCardProp
         </p>
       </div>
 
-      {/* Learn More - stays at bottom */}
+      {/* Learn More */}
       <span className="inline-flex items-center gap-1.5 mt-[18px] text-[0.85rem] font-semibold text-blue transition-all duration-300 group-hover:gap-2.5 flex-shrink-0">
         Learn More
         <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>

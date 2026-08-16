@@ -1,13 +1,41 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { SOLUTIONS } from "@/lib/data";
+import { useEffect, useRef, useState } from "react";
+import { getSolutions } from "@/services/solutionApi";
+import { SolutionData } from "@/types/admin/solution";
 import SolutionCard from "./SolutionCard";
 
 export default function SolutionsSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
+    const [solutions, setSolutions] = useState<SolutionData[]>([]);
+    const [loading, setLoading] = useState(true);
 
+    // ============================================================
+    // FETCH SOLUTIONS
+    // ============================================================
     useEffect(() => {
+        const fetchSolutions = async () => {
+            try {
+                setLoading(true);
+                const data = await getSolutions();
+                // Only show active solutions on frontend
+                setSolutions(data.filter(s => s.isActive !== false));
+            } catch (error) {
+                console.error("Error fetching solutions:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSolutions();
+    }, []);
+
+    // ============================================================
+    // SCROLL ANIMATION
+    // ============================================================
+    useEffect(() => {
+        if (loading) return;
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -45,8 +73,27 @@ export default function SolutionsSection() {
                 observer.unobserve(sectionRef.current);
             }
         };
-    }, []);
+    }, [loading]);
 
+    // ============================================================
+    // LOADING STATE
+    // ============================================================
+    if (loading) {
+        return (
+            <section className="py-24 md:py-32 bg-off-white" id="solutions" ref={sectionRef}>
+                <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div className="text-center">
+                        <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
+                        <p className="text-grey-400 mt-4">Loading solutions...</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    // ============================================================
+    // RENDER
+    // ============================================================
     return (
         <section className="py-24 md:py-32 bg-off-white" id="solutions" ref={sectionRef}>
             <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
@@ -65,9 +112,9 @@ export default function SolutionsSection() {
 
                 {/* Solutions Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {SOLUTIONS.map((solution, index) => (
+                    {solutions.map((solution) => (
                         <div
-                            key={index}
+                            key={solution._id}
                             className="solution-card-wrapper opacity-0 translate-y-[30px] transition-all duration-700 flex"
                         >
                             <SolutionCard

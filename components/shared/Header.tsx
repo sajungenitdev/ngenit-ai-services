@@ -2,16 +2,41 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { SERVICES, INDUSTRIES } from "@/lib/data";
 import styles from "./Header.module.css";
 import AiServicesMenus from "./NavBarMenus/AiServicesMenus";
 import IndustrialMenus from "./NavBarMenus/IndustrialMenus";
+import { getServices } from "@/services/serviceApi";
+import { getIndustries } from "@/services/industryApi";
+import { ServiceData } from "@/types/admin/service";
+import { IndustryData } from "@/types/admin/industry";
 
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [servicesOpen, setServicesOpen] = useState(false);
     const [industriesOpen, setIndustriesOpen] = useState(false);
+    const [services, setServices] = useState<ServiceData[]>([]);
+    const [industries, setIndustries] = useState<IndustryData[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    // Fetch data on mount
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [servicesData, industriesData] = await Promise.all([
+                    getServices(),
+                    getIndustries()
+                ]);
+                setServices(servicesData);
+                setIndustries(industriesData);
+            } catch (error) {
+                console.error("Error fetching header data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -74,7 +99,7 @@ export default function Header() {
                                         <polyline points="6 9 12 15 18 9" />
                                     </svg>
                                 </span>
-                                <AiServicesMenus isOpen={servicesOpen} />
+                                <AiServicesMenus isOpen={servicesOpen} services={services} />
                             </li>
 
                             {/* Industry Solutions Dropdown */}
@@ -95,7 +120,7 @@ export default function Header() {
                                         <polyline points="6 9 12 15 18 9" />
                                     </svg>
                                 </span>
-                                <IndustrialMenus isOpen={industriesOpen} />
+                                <IndustrialMenus isOpen={industriesOpen} industries={industries} />
                             </li>
 
                             <li className={styles.navItem}>
@@ -189,10 +214,10 @@ export default function Header() {
                         </div>
                         {servicesOpen && (
                             <div className={styles.drawerAccordionContent}>
-                                {SERVICES.map((s) => (
+                                {services.map((s) => (
                                     <Link
-                                        href={`/service/${s.id}`}
-                                        key={s.id}
+                                        href={`/service/${s._id}`}
+                                        key={s._id}
                                         className={styles.drawerSubLink}
                                         onClick={() => setMobileOpen(false)}
                                     >
@@ -216,10 +241,10 @@ export default function Header() {
                         </div>
                         {industriesOpen && (
                             <div className={styles.drawerAccordionContent}>
-                                {INDUSTRIES.map((i) => (
+                                {industries.map((i) => (
                                     <Link
-                                        href={`/industries/${i.id}`}
-                                        key={i.id}
+                                        href={`/industries/${i.slug || i._id}`}
+                                        key={i._id}
                                         className={styles.drawerSubLink}
                                         onClick={() => setMobileOpen(false)}
                                     >
