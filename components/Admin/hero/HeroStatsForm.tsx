@@ -1,6 +1,6 @@
 "use client";
 
-import { HeroData } from "@/types/hero";
+import { HeroData } @/types/admin/hero
 
 interface HeroStatsFormProps {
     data: HeroData;

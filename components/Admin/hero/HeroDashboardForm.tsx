@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus, Trash2, GripVertical } from "lucide-react";
-import { HeroData } from "@/types/hero";
+import { HeroData } from "@/types/admin/hero";
 
 interface HeroDashboardFormProps {
     data: HeroData;
