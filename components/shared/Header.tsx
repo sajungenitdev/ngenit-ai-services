@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // ✅ Import this
 import styles from "./Header.module.css";
 import AiServicesMenus from "./NavBarMenus/AiServicesMenus";
 import IndustrialMenus from "./NavBarMenus/IndustrialMenus";
@@ -11,6 +12,7 @@ import { ServiceData } from "@/types/admin/service";
 import { IndustryData } from "@/types/admin/industry";
 
 export default function Header() {
+    const pathname = usePathname(); // ✅ Get current path
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [servicesOpen, setServicesOpen] = useState(false);
@@ -18,6 +20,20 @@ export default function Header() {
     const [services, setServices] = useState<ServiceData[]>([]);
     const [industries, setIndustries] = useState<IndustryData[]>([]);
     const [loading, setLoading] = useState(true);
+
+    // Helper to check if a link is active
+    const isActive = (path: string) => {
+        if (path === "/") {
+            return pathname === path;
+        }
+        // Check if current path starts with the link path
+        return pathname?.startsWith(path);
+    };
+
+    // Helper to get active class
+    const getActiveClass = (path: string) => {
+        return isActive(path) ? styles.active : "";
+    };
 
     // Fetch data on mount
     useEffect(() => {
@@ -87,7 +103,7 @@ export default function Header() {
                                 onMouseEnter={() => setServicesOpen(true)}
                                 onMouseLeave={() => setServicesOpen(false)}
                             >
-                                <span className={styles.navLink}>
+                                <span className={`${styles.navLink} ${getActiveClass("/services")}`}>
                                     AI Services
                                     <svg
                                         className={styles.arrow}
@@ -108,7 +124,7 @@ export default function Header() {
                                 onMouseEnter={() => setIndustriesOpen(true)}
                                 onMouseLeave={() => setIndustriesOpen(false)}
                             >
-                                <span className={styles.navLink}>
+                                <span className={`${styles.navLink} ${getActiveClass("/industries")}`}>
                                     Industry Solutions
                                     <svg
                                         className={styles.arrow}
@@ -124,29 +140,29 @@ export default function Header() {
                             </li>
 
                             <li className={styles.navItem}>
-                                <Link href="/usecases" className={styles.navLink}>
+                                <Link href="/usecases" className={`${styles.navLink} ${getActiveClass("/usecases")}`}>
                                     Use Cases
                                 </Link>
                             </li>
                             <li className={styles.navItem}>
-                                <Link href="/solutions" className={styles.navLink}>
+                                <Link href="/solutions" className={`${styles.navLink} ${getActiveClass("/solutions")}`}>
                                     AI Solutions
                                 </Link>
                             </li>
                             <li className={styles.navItem}>
-                                <Link href="/about" className={styles.navLink}>
+                                <Link href="/about" className={`${styles.navLink} ${getActiveClass("/about")}`}>
                                     About Us
                                 </Link>
                             </li>
                             <li className={styles.navItem}>
-                                <Link href="/insights" className={styles.navLink}>
+                                <Link href="/insights" className={`${styles.navLink} ${getActiveClass("/insights")}`}>
                                     Insights
                                 </Link>
                             </li>
                         </ul>
 
                         <div className={styles.navCta}>
-                            <Link href="/contact" className={styles.btnConsult}>
+                            <Link href="/contact" className={`${styles.btnConsult} ${getActiveClass("/contact")}`}>
                                 Consult Us
                             </Link>
                             <button
@@ -198,7 +214,11 @@ export default function Header() {
                 </div>
 
                 <div className={styles.drawerBody}>
-                    <Link href="/" className={styles.drawerLink} onClick={() => setMobileOpen(false)}>
+                    <Link 
+                        href="/" 
+                        className={`${styles.drawerLink} ${getActiveClass("/")}`} 
+                        onClick={() => setMobileOpen(false)}
+                    >
                         Home
                     </Link>
 
@@ -216,9 +236,9 @@ export default function Header() {
                             <div className={styles.drawerAccordionContent}>
                                 {services.map((s) => (
                                     <Link
-                                        href={`/service/${s._id}`}
+                                        href={`/services/${s._id}`}
                                         key={s._id}
-                                        className={styles.drawerSubLink}
+                                        className={`${styles.drawerSubLink} ${getActiveClass(`/services/${s._id}`)}`}
                                         onClick={() => setMobileOpen(false)}
                                     >
                                         <span className={styles.drawerSubIcon}>{s.icon}</span>
@@ -245,7 +265,7 @@ export default function Header() {
                                     <Link
                                         href={`/industries/${i.slug || i._id}`}
                                         key={i._id}
-                                        className={styles.drawerSubLink}
+                                        className={`${styles.drawerSubLink} ${getActiveClass(`/industries/${i.slug || i._id}`)}`}
                                         onClick={() => setMobileOpen(false)}
                                     >
                                         <span className={styles.drawerSubIcon}>{i.icon}</span>
@@ -256,21 +276,41 @@ export default function Header() {
                         )}
                     </div>
 
-                    <Link href="/usecases" className={styles.drawerLink} onClick={() => setMobileOpen(false)}>
+                    <Link 
+                        href="/usecases" 
+                        className={`${styles.drawerLink} ${getActiveClass("/usecases")}`} 
+                        onClick={() => setMobileOpen(false)}
+                    >
                         Use Cases
                     </Link>
-                    <Link href="/solutions" className={styles.drawerLink} onClick={() => setMobileOpen(false)}>
+                    <Link 
+                        href="/solutions" 
+                        className={`${styles.drawerLink} ${getActiveClass("/solutions")}`} 
+                        onClick={() => setMobileOpen(false)}
+                    >
                         AI Solutions
                     </Link>
-                    <Link href="/about" className={styles.drawerLink} onClick={() => setMobileOpen(false)}>
+                    <Link 
+                        href="/about" 
+                        className={`${styles.drawerLink} ${getActiveClass("/about")}`} 
+                        onClick={() => setMobileOpen(false)}
+                    >
                         About Us
                     </Link>
-                    <Link href="/insights" className={styles.drawerLink} onClick={() => setMobileOpen(false)}>
+                    <Link 
+                        href="/insights" 
+                        className={`${styles.drawerLink} ${getActiveClass("/insights")}`} 
+                        onClick={() => setMobileOpen(false)}
+                    >
                         Insights
                     </Link>
 
                     <div className={styles.drawerFooter}>
-                        <Link href="/contact" className={styles.drawerConsultBtn} onClick={() => setMobileOpen(false)}>
+                        <Link 
+                            href="/contact" 
+                            className={`${styles.drawerConsultBtn} ${getActiveClass("/contact")}`} 
+                            onClick={() => setMobileOpen(false)}
+                        >
                             Consult Us
                         </Link>
                     </div>

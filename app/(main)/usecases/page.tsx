@@ -292,8 +292,8 @@ export default function UseCasesPage() {
                                     key={industry}
                                     onClick={() => setActiveFilter(industry)}
                                     className={`px-4 py-2 rounded-full text-sm font-semibold border-2 transition-all duration-300 ${activeFilter === industry
-                                            ? "bg-navy border-navy text-white"
-                                            : "bg-white border-grey-200 text-grey-600 hover:border-cyan hover:text-navy"
+                                        ? "bg-navy border-navy text-white"
+                                        : "bg-white border-grey-200 text-grey-600 hover:border-cyan hover:text-navy"
                                         }`}
                                 >
                                     {industry}
@@ -338,9 +338,8 @@ export default function UseCasesPage() {
                                     </h3>
 
                                     {/* Description */}
-                                    <p className="text-[0.85rem] text-grey-400 leading-relaxed">
-                                        {useCase.desc}
-                                    </p>
+                                    <p className="text-[0.85rem] text-grey-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: useCase.desc }}
+                                    />
 
                                     {/* Result */}
                                     <div className="mt-4 pt-4 border-t border-grey-100">

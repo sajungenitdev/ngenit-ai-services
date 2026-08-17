@@ -109,7 +109,7 @@ export default function ServicesPage() {
                 {/* Services Grid Skeleton */}
                 <section className="py-16 md:py-24 bg-white">
                     <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             {[1, 2, 3, 4, 5, 6].map((i) => (
                                 <div
                                     key={i}
@@ -248,7 +248,7 @@ export default function ServicesPage() {
                         AI Services
                     </span>
                     <h1 className="text-white text-[clamp(2rem,4vw,2.9rem)] font-extrabold font-plus-jakarta leading-[1.15] mt-4">
-                        Our AI Services
+                        Featured AI Solutions, Ready to Deploy
                     </h1>
                     <p className="text-white/60 text-[1.05rem] max-w-[640px] leading-relaxed mt-4">
                         From strategy to deployment — practical AI services designed for enterprise,
@@ -263,7 +263,7 @@ export default function ServicesPage() {
                     <div className="services-header opacity-0 translate-y-[30px] transition-all duration-700" />
 
                     {/* Services Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {services.map((service) => (
                             <Link
                                 key={service._id}

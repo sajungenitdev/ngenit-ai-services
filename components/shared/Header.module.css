@@ -1,3 +1,75 @@
+/* Add these styles at the end of your existing CSS */
+
+/* ============================================================
+   ACTIVE LINK STYLES
+   ============================================================ */
+
+/* Desktop Nav Link Active */
+.navLink.active {
+    color: #00C2CB !important;
+    background: rgba(0, 194, 203, 0.08);
+}
+
+.navLink.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: #00C2CB;
+    border-radius: 2px;
+}
+
+/* For dropdown items */
+.navItem .navLink.active {
+    color: #00C2CB !important;
+}
+
+/* Mobile Drawer Link Active */
+.drawerLink.active {
+    color: #00C2CB !important;
+    background: rgba(0, 194, 203, 0.08);
+    padding-left: 12px;
+    border-radius: 6px;
+}
+
+.drawerLink.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #00C2CB;
+    border-radius: 0 2px 2px 0;
+}
+
+/* Make drawerLink relative for positioning */
+.drawerLink {
+    position: relative;
+    /* Add this to existing .drawerLink */
+}
+
+/* Mobile Drawer Sub Link Active */
+.drawerSubLink.active {
+    color: #00C2CB !important;
+}
+
+/* Consult Button Active */
+.btnConsult.active {
+    background: #00C2CB !important;
+    color: #0D1B3E !important;
+    box-shadow: 0 4px 20px rgba(0, 194, 203, 0.3) !important;
+}
+
+/* Mobile Consult Button Active */
+.drawerConsultBtn.active {
+    background: #00C2CB !important;
+    color: #0D1B3E !important;
+}
+
 /* Navbar */
 .navbar {
     position: fixed;

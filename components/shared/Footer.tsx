@@ -74,6 +74,15 @@ export default function Footer() {
     ];
 
     // ============================================================
+    // LEGAL LINKS
+    // ============================================================
+    const legalLinks = [
+        { label: "Privacy Policy", href: "/privacy" },
+        { label: "Terms of Service", href: "/terms" },
+        { label: "Cookie Policy", href: "/cookie" }
+    ];
+
+    // ============================================================
     // SKELETON LOADER
     // ============================================================
     if (loading) {
@@ -85,7 +94,7 @@ export default function Footer() {
                             <div key={i} className="space-y-4">
                                 {/* Header Skeleton */}
                                 <div className="h-4 w-24 bg-white/10 rounded skeleton-pulse"></div>
-                                
+
                                 {/* Links Skeleton */}
                                 <div className="space-y-3">
                                     <div className="h-3 w-32 bg-white/10 rounded skeleton-pulse"></div>
@@ -257,13 +266,13 @@ export default function Footer() {
                         Serving Bangladesh, UK, Singapore, Portugal &amp; the Middle East.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-                        {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((item, index) => (
+                        {legalLinks.map((item, index) => (
                             <Link
                                 key={index}
-                                href="#"
+                                href={item.href}
                                 className="text-white/25 text-xs transition-all duration-300 hover:text-white/60 hover:underline"
                             >
-                                {item}
+                                {item.label}
                             </Link>
                         ))}
                     </div>
