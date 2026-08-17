@@ -247,7 +247,7 @@ export default function IndustryDetailPage() {
                     <h1 className="text-white text-[clamp(2rem,4vw,2.9rem)] font-extrabold font-plus-jakarta leading-[1.15]">
                         AI Solutions for {industry.name}
                     </h1>
-                    <p className="text-white/60 text-[1.05rem] max-w-[640px] leading-relaxed mt-4" dangerouslySetInnerHTML={{ __html: industry.long } }/>
+                    <p className="text-white/60 text-[1.05rem] max-w-[640px] leading-relaxed mt-4" dangerouslySetInnerHTML={{ __html: industry.long }} />
 
                     {/* CTA Buttons */}
                     <div className="flex flex-wrap gap-4 mt-7">
@@ -279,7 +279,7 @@ export default function IndustryDetailPage() {
                             <h2 className="text-[clamp(1.5rem,2.5vw,2rem)] font-bold text-navy font-plus-jakarta mb-4">
                                 AI Solutions for {industry.name}
                             </h2>
-                            <p className="text-grey-600 text-[1.02rem] leading-relaxed" dangerouslySetInnerHTML={{ __html: industry.long } }/>
+                            <p className="text-grey-600 text-[1.02rem] leading-relaxed" dangerouslySetInnerHTML={{ __html: industry.long }} />
 
                             {/* Key Challenges */}
                             {industry.challenges && industry.challenges.length > 0 && (
@@ -410,7 +410,9 @@ export default function IndustryDetailPage() {
                                     </Link>
                                     <Link
                                         href="/industries"
-                                        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 mt-3 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-transparent text-navy border-grey-200 hover:bg-off-white hover:border-navy"
+                                        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 mt-3 rounded-[8px] 
+                                        font-semibold text-[0.95rem] border-2 border-gray-400 transition-all duration-200 whitespace-nowrap 
+                                        bg-transparent text-navy  hover:bg-off-white hover:border-navy"
                                     >
                                         View All Industries →
                                     </Link>
