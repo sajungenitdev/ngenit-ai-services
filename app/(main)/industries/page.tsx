@@ -320,7 +320,7 @@ export default function IndustriesPage() {
                         Industries
                     </span>
                     <h1 className="text-white text-[clamp(2rem,4vw,2.9rem)] font-extrabold font-plus-jakarta leading-[1.15] mt-4">
-                        AI Solutions for<br />Every Industry
+                        AI Solutions for Every Industry
                     </h1>
                     <p className="text-white/60 text-[1.05rem] max-w-[640px] leading-relaxed mt-4">
                         Discover how AI can transform your industry — from manufacturing and energy
