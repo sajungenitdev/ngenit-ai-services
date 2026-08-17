@@ -391,7 +391,7 @@ export default function AboutPage() {
                                         key={index}
                                         className="bg-off-white rounded-xl p-6 hover:shadow-md transition-all duration-300 hover:-translate-y-1"
                                     >
-                                        <div className="text-3xl mb-3">{office.flag}</div>
+                                        <div className="text-3xl text-black mb-3">{office.flag}</div>
                                         <h4 className="text-navy text-sm font-semibold font-plus-jakarta">
                                             {office.city}, {office.country}
                                         </h4>
