@@ -418,13 +418,13 @@ export default function InsightDetailPage() {
                                 href="/contact"
                                 className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-cyan text-navy shadow-[0_4px_20px_rgba(0,194,203,0.3)] hover:bg-cyan-light hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,194,203,0.4)]"
                             >
-                                Ask Our Team
+                                Send Your Requirement
                             </Link>
                             <Link
-                                href="/services"
+                                href="mailto:ai@ngenitltd.com"
                                 className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-transparent text-white border-white/40 hover:bg-white/10 hover:border-white"
                             >
-                                Explore Our Services →
+                                Email Our AI Team
                             </Link>
                         </div>
                     </div>

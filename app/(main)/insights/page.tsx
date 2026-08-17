@@ -352,18 +352,30 @@ export default function InsightsPage() {
                             </p>
                         </div>
                         <div className="flex flex-col gap-3 min-w-[200px] w-full lg:w-auto">
+                            <a
+                                href="https://wa.me/8801XXXXXXXXX?text=Hello%20NGEN%20IT%2C%20I%20would%20like%20to%20discuss%20an%20AI%20requirement."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-green-500 text-white shadow-[0_4px_20px_rgba(37,211,102,0.3)] hover:bg-[#1ebe5d] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(37,211,102,0.4)]"
+                            >
+                                💬 Chat on WhatsApp
+                            </a>
+
+                            {/* ✅ Internal Link - Use Next.js Link */}
                             <Link
                                 href="/contact"
                                 className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-cyan text-navy shadow-[0_4px_20px_rgba(0,194,203,0.3)] hover:bg-cyan-light hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,194,203,0.4)]"
                             >
-                                Ask Our Team
+                                Send Your Requirement
                             </Link>
-                            <Link
-                                href="/services"
+
+                            {/* ✅ Email - Use <a> tag without target="_blank" */}
+                            <a
+                                href="mailto:ai@ngenitltd.com"
                                 className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-transparent text-white border-white/40 hover:bg-white/10 hover:border-white"
                             >
-                                Explore Our Services →
-                            </Link>
+                                Email Our AI Team
+                            </a>
                         </div>
                     </div>
                 </div>
