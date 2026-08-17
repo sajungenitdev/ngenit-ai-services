@@ -228,7 +228,7 @@ export default function ServiceDetailPage() {
                     <div className="flex items-center gap-2 text-white/40 text-sm mb-5">
                         <Link href="/" className="hover:text-cyan transition-colors">Home</Link>
                         <span>/</span>
-                        <Link href="/services" className="hover:text-cyan transition-colors">AI Services</Link>
+                        <Link href="/service" className="hover:text-cyan transition-colors">AI Services</Link>
                         <span>/</span>
                         <span className="text-white/80">{service.name}</span>
                     </div>
@@ -365,7 +365,7 @@ export default function ServiceDetailPage() {
                                     {otherServices.map((s) => (
                                         <Link
                                             key={s._id}
-                                            href={`/services/${s._id}`}
+                                            href={`/service/${s._id}`}
                                             className="flex items-center gap-3 py-3 border-b border-grey-200 last:border-0 transition-all duration-200 hover:pl-2 group"
                                         >
                                             <span className="text-lg">{s.icon}</span>
@@ -412,7 +412,7 @@ export default function ServiceDetailPage() {
                                 Send Your Requirement
                             </Link>
                             <Link
-                                href="/services"
+                                href="/service"
                                 className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-transparent text-white border-white/40 hover:bg-white/10 hover:border-white"
                             >
                                 Explore All Services →

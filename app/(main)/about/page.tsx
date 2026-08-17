@@ -135,7 +135,7 @@ export default function AboutPage() {
                                 <div className="space-y-6 pl-8 border-l-2 border-grey-200">
                                     {[1, 2, 3, 4, 5].map((i) => (
                                         <div key={i} className="relative pb-6 last:pb-0">
-                                            <div className="absolute -left-[38px] top-1.5 w-3.5 h-3.5 rounded-full bg-cyan/30 skeleton-pulse"></div>
+                                            <div className="absolute -left-[40px] top-1.5 w-3.5 h-3.5 rounded-full bg-cyan/30 skeleton-pulse"></div>
                                             <div className="h-4 w-16 bg-grey-200 rounded skeleton-pulse"></div>
                                             <div className="h-5 w-3/4 bg-grey-200 rounded skeleton-pulse mt-1"></div>
                                             <div className="space-y-1 mt-1">
@@ -329,7 +329,7 @@ export default function AboutPage() {
                         <div className="relative pl-8 border-l-2 border-grey-200">
                             {data.milestones && data.milestones.map((milestone: Milestone, index: number) => (
                                 <div key={index} className="relative pb-8 last:pb-0">
-                                    <div className="absolute -left-[38px] top-1.5 w-3.5 h-3.5 rounded-full bg-cyan border-3 border-white shadow-[0_0_0_2px_#00C2CB]"></div>
+                                    <div className="absolute -left-[40px] top-1.5 w-3.5 h-3.5 rounded-full bg-cyan border-3 border-white shadow-[0_0_0_2px_#00C2CB]"></div>
                                     <div className="text-blue font-extrabold text-sm font-plus-jakarta">
                                         {milestone.year}
                                     </div>

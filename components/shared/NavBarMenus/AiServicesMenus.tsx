@@ -33,7 +33,7 @@ export default function AiServicesMenus({ isOpen, services = [] }: ServiceDropdo
                     </p>
                 </div>
                 <Link
-                    href="/services"
+                    href="/service"
                     className="text-blue font-semibold text-sm hover:text-cyan transition-colors"
                 >
                     View All →
