@@ -428,7 +428,7 @@ export default function IndustryDetailPage() {
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
                         <div className="text-center lg:text-left">
                             <h2 className="font-plus-jakarta font-bold text-[clamp(1.5rem,2.5vw,2.2rem)] leading-[1.15] text-white max-w-[560px]">
-                                {industry.ctaText || "Ready to Transform Your Operations?"}
+                                {industry.ctaText || "Don't see your industry listed?"}
                             </h2>
                             <p className="text-white/60 text-[1rem] mt-3 max-w-[460px] leading-relaxed">
                                 Let's discuss how AI can solve your specific challenges and drive measurable results.

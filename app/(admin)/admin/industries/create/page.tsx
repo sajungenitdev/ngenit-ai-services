@@ -52,7 +52,7 @@ const defaultIndustryData: IndustryFormData = {
     challenges: [""],
     solutions: [{ title: "", description: "" }],
     focusAreas: [""],
-    ctaText: "Ready to Transform Your Operations?",
+    ctaText: "Don't see your industry listed?",
     ctaButtons: {
         primary: { label: "Discuss AI Solutions", link: "/contact" },
         secondary: { label: "💬 WhatsApp Us", link: "https://wa.me/8801XXXXXXXXX" },
@@ -434,7 +434,7 @@ export default function CreateIndustryPage() {
                                     value={formData.ctaText}
                                     onChange={handleInputChange}
                                     className="w-full px-4 py-3 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
-                                    placeholder="Ready to Transform Your Operations?"
+                                    placeholder="Don't see your industry listed?"
                                 />
                             </div>
 

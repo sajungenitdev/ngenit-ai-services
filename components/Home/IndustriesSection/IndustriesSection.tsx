@@ -231,7 +231,7 @@ export default function IndustriesSection() {
                 <div className="text-center mt-8">
                     <Link
                         href="/industries"
-                        className="inline-flex items-center gap-2 px-7 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-transparent text-navy border-grey-200 hover:bg-off-white hover:border-navy"
+                        className="inline-flex border border-1 border-gray-400 items-center gap-2 px-7 py-3.5 rounded-[8px] font-semibold text-[0.95rem]  border-transparent transition-all duration-200 whitespace-nowrap bg-transparent text-navy  hover:bg-off-white hover:border-navy"
                     >
                         View All Industries →
                     </Link>
