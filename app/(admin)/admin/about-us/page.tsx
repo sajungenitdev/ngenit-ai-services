@@ -16,7 +16,6 @@ import { getAboutPage, updateAboutPage, resetAboutPage } from "@/services/aboutP
 import { AboutPageData, Milestone, Value, Office } from "@/types/admin/aboutPage";
 import toast from 'react-hot-toast';
 import RichTextEditor from "@/components/Admin/RichTextEditor";
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 
 // ============================================================
 // DEFAULT DATA
@@ -87,22 +86,6 @@ export default function AboutPageAdmin() {
 
         loadData();
     }, []);
-
-    // ============================================================
-    // DRAG AND DROP HANDLERS
-    // ============================================================
-    const handleDragEnd = (result: DropResult, type: 'milestones' | 'values' | 'offices') => {
-        if (!result.destination) return;
-
-        const items = Array.from(formData[type]);
-        const [reorderedItem] = items.splice(result.source.index, 1);
-        items.splice(result.destination.index, 0, reorderedItem);
-
-        setFormData((prev) => ({
-            ...prev,
-            [type]: items,
-        }));
-    };
 
     // ============================================================
     // HANDLERS
@@ -484,78 +467,53 @@ export default function AboutPageAdmin() {
                                 Add Milestone
                             </button>
                         </div>
-                        <DragDropContext onDragEnd={(result) => handleDragEnd(result, 'milestones')}>
-                            <Droppable droppableId="milestones">
-                                {(provided) => (
-                                    <div
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                        className="space-y-4"
-                                    >
-                                        {formData.milestones.map((milestone, index) => (
-                                            <Draggable key={index} draggableId={`milestone-${index}`} index={index}>
-                                                {(provided, snapshot) => (
-                                                    <div
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        className={`border rounded-lg p-4 transition-colors ${snapshot.isDragging
-                                                                ? 'border-cyan bg-cyan/5 shadow-lg'
-                                                                : 'border-grey-100 hover:border-grey-200'
-                                                            }`}
-                                                    >
-                                                        <div className="flex items-start gap-3">
-                                                            <div
-                                                                {...provided.dragHandleProps}
-                                                                className="cursor-move mt-1"
-                                                            >
-                                                                <GripVertical className="w-5 h-5 text-grey-400 hover:text-grey-600" />
-                                                            </div>
-                                                            <div className="w-8 h-8 rounded-full bg-cyan/10 flex items-center justify-center text-cyan font-bold text-sm flex-shrink-0">
-                                                                {index + 1}
-                                                            </div>
-                                                            <div className="flex-1 space-y-3">
-                                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                                                    <input
-                                                                        type="text"
-                                                                        value={milestone.year}
-                                                                        onChange={(e) => handleMilestoneChange(index, "year", e.target.value)}
-                                                                        className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
-                                                                        placeholder="2009"
-                                                                    />
-                                                                    <input
-                                                                        type="text"
-                                                                        value={milestone.title}
-                                                                        onChange={(e) => handleMilestoneChange(index, "title", e.target.value)}
-                                                                        className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
-                                                                        placeholder="NGEN IT Founded"
-                                                                    />
-                                                                    <input
-                                                                        type="text"
-                                                                        value={milestone.description}
-                                                                        onChange={(e) => handleMilestoneChange(index, "description", e.target.value)}
-                                                                        className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
-                                                                        placeholder="Established in Dhaka..."
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => removeMilestone(index)}
-                                                                className="text-red-400 hover:text-red-600 transition-colors disabled:opacity-30"
-                                                                disabled={formData.milestones.length <= 1}
-                                                            >
-                                                                <Trash2 className="w-4 h-4" />
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </Draggable>
-                                        ))}
-                                        {provided.placeholder}
+                        <div className="space-y-4">
+                            {formData.milestones.map((milestone, index) => (
+                                <div
+                                    key={index}
+                                    className="border border-grey-100 rounded-lg p-4 hover:border-grey-200 transition-colors"
+                                >
+                                    <div className="flex items-start gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-cyan/10 flex items-center justify-center text-cyan font-bold text-sm flex-shrink-0">
+                                            {index + 1}
+                                        </div>
+                                        <div className="flex-1 space-y-3">
+                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                                <input
+                                                    type="text"
+                                                    value={milestone.year}
+                                                    onChange={(e) => handleMilestoneChange(index, "year", e.target.value)}
+                                                    className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
+                                                    placeholder="2009"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    value={milestone.title}
+                                                    onChange={(e) => handleMilestoneChange(index, "title", e.target.value)}
+                                                    className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
+                                                    placeholder="NGEN IT Founded"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    value={milestone.description}
+                                                    onChange={(e) => handleMilestoneChange(index, "description", e.target.value)}
+                                                    className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
+                                                    placeholder="Established in Dhaka..."
+                                                />
+                                            </div>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => removeMilestone(index)}
+                                            className="text-red-400 hover:text-red-600 transition-colors disabled:opacity-30"
+                                            disabled={formData.milestones.length <= 1}
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </button>
                                     </div>
-                                )}
-                            </Droppable>
-                        </DragDropContext>
+                                </div>
+                            ))}
+                        </div>
                         {formData.milestones.length <= 1 && (
                             <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">
                                 ⚠️ At least one milestone is required
@@ -580,75 +538,51 @@ export default function AboutPageAdmin() {
                                 Add Value
                             </button>
                         </div>
-                        <DragDropContext onDragEnd={(result) => handleDragEnd(result, 'values')}>
-                            <Droppable droppableId="values">
-                                {(provided) => (
-                                    <div
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                        className="space-y-4"
-                                    >
-                                        {formData.values.map((value, index) => (
-                                            <Draggable key={index} draggableId={`value-${index}`} index={index}>
-                                                {(provided, snapshot) => (
-                                                    <div
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        className={`border rounded-lg p-4 transition-colors ${snapshot.isDragging
-                                                                ? 'border-cyan bg-cyan/5 shadow-lg'
-                                                                : 'border-grey-100 hover:border-grey-200'
-                                                            }`}
-                                                    >
-                                                        <div className="flex items-start gap-3">
-                                                            <div
-                                                                {...provided.dragHandleProps}
-                                                                className="cursor-move mt-2.5"
-                                                            >
-                                                                <GripVertical className="w-5 h-5 text-grey-400 hover:text-grey-600" />
-                                                            </div>
-                                                            <div className="flex-1 space-y-3">
-                                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                                                    <input
-                                                                        type="text"
-                                                                        value={value.icon}
-                                                                        onChange={(e) => handleValueChange(index, "icon", e.target.value)}
-                                                                        className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
-                                                                        placeholder="🎯"
-                                                                    />
-                                                                    <input
-                                                                        type="text"
-                                                                        value={value.title}
-                                                                        onChange={(e) => handleValueChange(index, "title", e.target.value)}
-                                                                        className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
-                                                                        placeholder="Practical, Not Hype"
-                                                                    />
-                                                                    <input
-                                                                        type="text"
-                                                                        value={value.description}
-                                                                        onChange={(e) => handleValueChange(index, "description", e.target.value)}
-                                                                        className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
-                                                                        placeholder="We focus on measurable business outcomes..."
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => removeValue(index)}
-                                                                className="text-red-400 hover:text-red-600 transition-colors disabled:opacity-30"
-                                                                disabled={formData.values.length <= 1}
-                                                            >
-                                                                <Trash2 className="w-4 h-4" />
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </Draggable>
-                                        ))}
-                                        {provided.placeholder}
+                        <div className="space-y-4">
+                            {formData.values.map((value, index) => (
+                                <div
+                                    key={index}
+                                    className="border border-grey-100 rounded-lg p-4 hover:border-grey-200 transition-colors"
+                                >
+                                    <div className="flex items-start gap-3">
+                                        <GripVertical className="w-5 h-5 text-grey-300 cursor-move mt-2.5" />
+                                        <div className="flex-1 space-y-3">
+                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                                <input
+                                                    type="text"
+                                                    value={value.icon}
+                                                    onChange={(e) => handleValueChange(index, "icon", e.target.value)}
+                                                    className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
+                                                    placeholder="🎯"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    value={value.title}
+                                                    onChange={(e) => handleValueChange(index, "title", e.target.value)}
+                                                    className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
+                                                    placeholder="Practical, Not Hype"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    value={value.description}
+                                                    onChange={(e) => handleValueChange(index, "description", e.target.value)}
+                                                    className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
+                                                    placeholder="We focus on measurable business outcomes..."
+                                                />
+                                            </div>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => removeValue(index)}
+                                            className="text-red-400 hover:text-red-600 transition-colors disabled:opacity-30"
+                                            disabled={formData.values.length <= 1}
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </button>
                                     </div>
-                                )}
-                            </Droppable>
-                        </DragDropContext>
+                                </div>
+                            ))}
+                        </div>
                         {formData.values.length <= 1 && (
                             <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">
                                 ⚠️ At least one value is required
@@ -673,82 +607,58 @@ export default function AboutPageAdmin() {
                                 Add Office
                             </button>
                         </div>
-                        <DragDropContext onDragEnd={(result) => handleDragEnd(result, 'offices')}>
-                            <Droppable droppableId="offices">
-                                {(provided) => (
-                                    <div
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                        className="space-y-4"
-                                    >
-                                        {formData.offices.map((office, index) => (
-                                            <Draggable key={index} draggableId={`office-${index}`} index={index}>
-                                                {(provided, snapshot) => (
-                                                    <div
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        className={`border rounded-lg p-4 transition-colors ${snapshot.isDragging
-                                                                ? 'border-cyan bg-cyan/5 shadow-lg'
-                                                                : 'border-grey-100 hover:border-grey-200'
-                                                            }`}
-                                                    >
-                                                        <div className="flex items-start gap-3">
-                                                            <div
-                                                                {...provided.dragHandleProps}
-                                                                className="cursor-move mt-2.5"
-                                                            >
-                                                                <GripVertical className="w-5 h-5 text-grey-400 hover:text-grey-600" />
-                                                            </div>
-                                                            <div className="flex-1 space-y-3">
-                                                                <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-                                                                    <input
-                                                                        type="text"
-                                                                        value={office.flag}
-                                                                        onChange={(e) => handleOfficeChange(index, "flag", e.target.value)}
-                                                                        className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
-                                                                        placeholder="🇧🇩"
-                                                                    />
-                                                                    <input
-                                                                        type="text"
-                                                                        value={office.city}
-                                                                        onChange={(e) => handleOfficeChange(index, "city", e.target.value)}
-                                                                        className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
-                                                                        placeholder="Dhaka"
-                                                                    />
-                                                                    <input
-                                                                        type="text"
-                                                                        value={office.country}
-                                                                        onChange={(e) => handleOfficeChange(index, "country", e.target.value)}
-                                                                        className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
-                                                                        placeholder="Bangladesh"
-                                                                    />
-                                                                    <input
-                                                                        type="text"
-                                                                        value={office.description}
-                                                                        onChange={(e) => handleOfficeChange(index, "description", e.target.value)}
-                                                                        className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
-                                                                        placeholder="Head office — sales, engineering and delivery teams"
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => removeOffice(index)}
-                                                                className="text-red-400 hover:text-red-600 transition-colors disabled:opacity-30"
-                                                                disabled={formData.offices.length <= 1}
-                                                            >
-                                                                <Trash2 className="w-4 h-4" />
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </Draggable>
-                                        ))}
-                                        {provided.placeholder}
+                        <div className="space-y-4">
+                            {formData.offices.map((office, index) => (
+                                <div
+                                    key={index}
+                                    className="border border-grey-100 rounded-lg p-4 hover:border-grey-200 transition-colors"
+                                >
+                                    <div className="flex items-start gap-3">
+                                        <GripVertical className="w-5 h-5 text-black cursor-move mt-2.5" />
+                                        <div className="flex-1 space-y-3">
+                                            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                                                <input
+                                                    type="text"
+                                                    value={office.flag}
+                                                    onChange={(e) => handleOfficeChange(index, "flag", e.target.value)}
+                                                    className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
+                                                    placeholder="🇧🇩"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    value={office.city}
+                                                    onChange={(e) => handleOfficeChange(index, "city", e.target.value)}
+                                                    className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
+                                                    placeholder="Dhaka"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    value={office.country}
+                                                    onChange={(e) => handleOfficeChange(index, "country", e.target.value)}
+                                                    className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
+                                                    placeholder="Bangladesh"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    value={office.description}
+                                                    onChange={(e) => handleOfficeChange(index, "description", e.target.value)}
+                                                    className="px-3 py-2 rounded-lg border border-grey-200 focus:border-blue outline-none transition-all"
+                                                    placeholder="Head office — sales, engineering and delivery teams"
+                                                />
+                                            </div>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => removeOffice(index)}
+                                            className="text-red-400 hover:text-red-600 transition-colors disabled:opacity-30"
+                                            disabled={formData.offices.length <= 1}
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </button>
                                     </div>
-                                )}
-                            </Droppable>
-                        </DragDropContext>
+                                </div>
+                            ))}
+                        </div>
                         {formData.offices.length <= 1 && (
                             <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">
                                 ⚠️ At least one office is required
