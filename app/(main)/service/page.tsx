@@ -267,7 +267,7 @@ export default function ServicesPage() {
                         {services.map((service) => (
                             <Link
                                 key={service._id}
-                                href={`/services/${service._id}`}
+                                href={`/service/${service._id}`}
                                 className="group block"
                             >
                                 <div className="service-card bg-white border border-grey-100 rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1.5 opacity-0 translate-y-[30px] h-full flex flex-col">
