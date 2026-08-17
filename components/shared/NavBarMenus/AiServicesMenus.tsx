@@ -12,7 +12,7 @@ export default function AiServicesMenus({ isOpen, services = [] }: ServiceDropdo
     return (
         <div 
             className={`
-                absolute top-full left-1/2 -translate-x-1/2 mt-2
+                absolute top-full left-1/2 -translate-x-1/2
                 bg-white rounded-2xl shadow-2xl p-8 w-[780px] max-w-[90vw]
                 border border-grey-100 z-[1000]
                 transition-all duration-200 ease-in-out

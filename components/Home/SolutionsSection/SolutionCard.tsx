@@ -24,10 +24,8 @@ export default function SolutionCard({ tag, name, desc, tags, footer }: Solution
             </h3>
 
             {/* Description */}
-            <p className="text-[0.875rem] text-grey-400 leading-relaxed flex-1">
-                {desc}
-            </p>
-
+            <p className="text-[0.875rem] text-grey-400 leading-relaxed flex-1" dangerouslySetInnerHTML={{ __html: desc } }/>
+           
             {/* Industry Tags */}
             <div className="flex flex-wrap gap-1.5 mt-5">
                 {tags.map((tag, index) => (

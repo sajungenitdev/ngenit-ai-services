@@ -12,7 +12,7 @@ export default function IndustrialMenus({ isOpen, industries = [] }: IndustrialM
     return (
         <div
             className={`
-                absolute top-full left-0 mt-2
+                absolute top-full left-0
                 bg-white rounded-2xl shadow-2xl p-6 w-[300px]
                 border border-grey-100 z-[1000]
                 transition-all duration-200 ease-in-out
