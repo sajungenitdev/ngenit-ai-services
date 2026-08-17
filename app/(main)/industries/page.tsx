@@ -332,8 +332,8 @@ export default function IndustriesPage() {
             {/* Industries Content */}
             <section className="py-16 md:py-24 bg-white" ref={sectionRef}>
                 <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
-                    <div className="industries-header opacity-0 translate-y-[30px] transition-all duration-700">
-                        {/* Search */}
+                    {/* <div className="industries-header opacity-0 translate-y-[30px] transition-all duration-700">
+                        
                         <div className="relative max-w-md mx-auto mb-10">
                             <input
                                 type="text"
@@ -364,74 +364,50 @@ export default function IndustriesPage() {
                                 </button>
                             )}
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* Results Count */}
-                    <p className="text-sm text-grey-400 mb-6">
+                    {/* <p className="text-sm text-grey-400 mb-6">
                         {filteredIndustries.length} {filteredIndustries.length === 1 ? 'industry' : 'industries'} found
-                    </p>
+                    </p> */}
 
                     {/* Industries Grid */}
                     {filteredIndustries.length === 0 ? (
-                        <div className="bg-off-white rounded-xl p-12 text-center">
-                            <h3 className="text-lg font-semibold text-navy mb-2">No industries found</h3>
-                            <p className="text-grey-400">
+                        <div className="bg-slate-50 rounded-xl p-12 text-center">
+                            <h3 className="text-lg font-semibold text-slate-900 mb-2">No industries found</h3>
+                            <p className="text-slate-500">
                                 Try adjusting your search terms
                             </p>
                             <button
                                 onClick={() => setSearchTerm("")}
-                                className="mt-4 px-6 py-2 bg-cyan text-navy rounded-lg font-semibold hover:bg-cyan-light transition-colors"
+                                className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                             >
                                 Clear Search
                             </button>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                             {filteredIndustries.map((industry) => (
                                 <Link
                                     key={industry._id}
                                     href={`/industries/${industry.slug || industry._id}`}
-                                    className="group block"
+                                    className="group block h-full"
                                 >
-                                    <div className="industry-card bg-white border border-grey-100 rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1.5 opacity-0 translate-y-[30px] h-full flex flex-col">
-                                        {/* Icon */}
-                                        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-navy-mid to-blue flex items-center justify-center text-2xl mb-4 group-hover:scale-105 transition-transform duration-300">
+                                    <div className="bg-white border border-slate-200/80 rounded-2xl p-6 hover:shadow-xl hover:bg-[#0B1437] hover:border-[#0B1437] transition-all duration-300 h-full flex flex-col items-center text-center">
+                                        {/* Icon Box */}
+                                        <div className="w-16 h-16 rounded-2xl bg-slate-100/70 group-hover:bg-[#111C44] flex items-center justify-center text-2xl mb-5 transition-colors duration-300">
                                             {industry.icon || '🏭'}
                                         </div>
 
-                                        {/* Name */}
-                                        <h3 className="text-lg font-semibold text-navy mb-2 group-hover:text-cyan transition-colors">
+                                        {/* Title */}
+                                        <h3 className="text-base font-bold text-slate-600 group-hover:text-white mb-2 transition-colors duration-300">
                                             {industry.name}
                                         </h3>
 
                                         {/* Description */}
-                                        <p className="text-grey-400 text-sm leading-relaxed flex-1">
+                                        <p className="text-slate-400 group-hover:text-slate-300 text-xs leading-relaxed transition-colors duration-300">
                                             {industry.short || industry.long}
                                         </p>
-
-                                        {/* Focus Areas */}
-                                        {industry.focusAreas && industry.focusAreas.length > 0 && (
-                                            <div className="flex flex-wrap gap-1.5 mt-4">
-                                                {industry.focusAreas.slice(0, 3).map((area, index) => (
-                                                    <span
-                                                        key={index}
-                                                        className="px-2 py-0.5 rounded-md bg-off-white text-black text-[0.65rem] font-medium"
-                                                    >
-                                                        {area}
-                                                    </span>
-                                                ))}
-                                                {industry.focusAreas.length > 3 && (
-                                                    <span className="px-2 py-0.5 rounded-md bg-off-white text-black text-[0.65rem] font-medium">
-                                                        +{industry.focusAreas.length - 3}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {/* Learn More */}
-                                        <div className="mt-4 pt-4 border-t border-grey-100 flex items-center text-sm font-medium text-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            Learn More →
-                                        </div>
                                     </div>
                                 </Link>
                             ))}
@@ -454,18 +430,28 @@ export default function IndustriesPage() {
                             </p>
                         </div>
                         <div className="flex flex-col gap-3 min-w-[200px] w-full lg:w-auto">
+                            <a
+                                href="https://wa.me/8801XXXXXXXXX?text=Hello%20NGEN%20IT%2C%20I%20would%20like%20to%20discuss%20an%20AI%20requirement."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-green-500 text-white shadow-[0_4px_20px_rgba(37,211,102,0.3)] hover:bg-[#1ebe5d] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(37,211,102,0.4)]"
+                            >
+                                💬 Chat on WhatsApp
+                            </a>
+
                             <Link
                                 href="/contact"
                                 className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-cyan text-navy shadow-[0_4px_20px_rgba(0,194,203,0.3)] hover:bg-cyan-light hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,194,203,0.4)]"
                             >
-                                Talk to Our Team
+                                Send Your Requirement
                             </Link>
-                            <Link
-                                href="/services"
+
+                            <a
+                                href="mailto:ai@ngenitltd.com"
                                 className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-transparent text-white border-white/40 hover:bg-white/10 hover:border-white"
                             >
-                                Explore All Services →
-                            </Link>
+                                Email Our AI Team
+                            </a>
                         </div>
                     </div>
                 </div>
