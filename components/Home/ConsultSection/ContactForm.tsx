@@ -4,6 +4,7 @@ import { useState } from "react";
 import { submitContactForm, ContactFormData } from "@/services/contactPageApi";
 import { Loader2 } from "lucide-react";
 import toast from 'react-hot-toast';
+import Link from "next/link";
 
 interface ContactFormProps {
     formData: {
@@ -359,16 +360,16 @@ export default function ContactForm({
                         name="consent"
                         checked={formState.consent}
                         onChange={handleInputChange}
-                        className="mt-1.5 shrink-0"
+                        className="mt-1.5 shrink-0 accent-blue-600 disabled:opacity-50"
                         required
                         disabled={isSubmitting}
                     />
                     <p className="text-[0.8rem] text-grey-400">
                         {formData.consentText}
                         {' '}
-                        <a href={formData.privacyPolicyLink} className="text-blue hover:underline">
+                        <Link href={formData.privacyPolicyLink} className="text-blue hover:underline">
                             Privacy Policy
-                        </a>
+                        </Link>
                         .
                     </p>
                 </div>
@@ -378,10 +379,10 @@ export default function ContactForm({
                     type="submit"
                     disabled={isSubmitting || formSubmitted}
                     className={`w-full py-4 rounded-[8px] font-semibold text-[1.05rem] border-2 border-transparent transition-all duration-200 cursor-pointer ${formSubmitted
-                            ? 'bg-[#28CA41] text-white'
-                            : isSubmitting
-                                ? 'bg-grey-300 text-grey-600 cursor-not-allowed'
-                                : 'bg-cyan text-navy shadow-[0_4px_20px_rgba(0,194,203,0.3)] hover:bg-cyan-light hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,194,203,0.4)]'
+                        ? 'bg-[#28CA41] text-white'
+                        : isSubmitting
+                            ? 'bg-grey-300 text-grey-600 cursor-not-allowed'
+                            : 'bg-cyan text-navy shadow-[0_4px_20px_rgba(0,194,203,0.3)] hover:bg-cyan-light hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,194,203,0.4)]'
                         }`}
                 >
                     {isSubmitting ? (
@@ -390,7 +391,7 @@ export default function ContactForm({
                             Submitting...
                         </>
                     ) : formSubmitted ? (
-                        '✓ ' + formData.successMessage
+                        formData.successMessage
                     ) : (
                         formData.submitButton
                     )}
