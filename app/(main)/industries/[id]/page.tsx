@@ -77,9 +77,7 @@ export default function IndustryDetailPage() {
                     <h1 className="text-white text-[clamp(2rem,4vw,2.9rem)] font-extrabold font-plus-jakarta leading-[1.15]">
                         AI Solutions for {industry.name}
                     </h1>
-                    <p className="text-white/60 text-[1.05rem] max-w-[640px] leading-relaxed mt-4">
-                        {industry.long}
-                    </p>
+                    <p className="text-white/60 text-[1.05rem] max-w-[640px] leading-relaxed mt-4" dangerouslySetInnerHTML={{ __html: industry.long } }/>
 
                     {/* CTA Buttons */}
                     <div className="flex flex-wrap gap-4 mt-7">
@@ -111,9 +109,7 @@ export default function IndustryDetailPage() {
                             <h2 className="text-[clamp(1.5rem,2.5vw,2rem)] font-bold text-navy font-plus-jakarta mb-4">
                                 AI Solutions for {industry.name}
                             </h2>
-                            <p className="text-grey-600 text-[1.02rem] leading-relaxed">
-                                {industry.long}
-                            </p>
+                            <p className="text-grey-600 text-[1.02rem] leading-relaxed" dangerouslySetInnerHTML={{ __html: industry.long } }/>
 
                             {/* Key Challenges */}
                             {industry.challenges && industry.challenges.length > 0 && (
