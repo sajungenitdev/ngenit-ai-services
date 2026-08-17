@@ -9,6 +9,7 @@ export default function UseCasesPage() {
     const [activeFilter, setActiveFilter] = useState("All");
     const [useCases, setUseCases] = useState<UseCaseData[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const sectionRef = useRef<HTMLDivElement>(null);
 
     // ============================================================
@@ -18,10 +19,12 @@ export default function UseCasesPage() {
         const fetchUseCases = async () => {
             try {
                 setLoading(true);
+                setError(null);
                 const data = await getUseCases();
                 setUseCases(data);
-            } catch (error) {
+            } catch (error: any) {
                 console.error("Error fetching use cases:", error);
+                setError(error.message || "Failed to load use cases");
             } finally {
                 setLoading(false);
             }
@@ -46,13 +49,12 @@ export default function UseCasesPage() {
     // SCROLL ANIMATION
     // ============================================================
     useEffect(() => {
-        if (loading) return;
+        if (loading || useCases.length === 0) return;
 
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        // Animate header
                         const header = entry.target.querySelector('.section-header');
                         if (header) {
                             setTimeout(() => {
@@ -60,7 +62,6 @@ export default function UseCasesPage() {
                             }, 100);
                         }
 
-                        // Animate cards with stagger
                         const cards = entry.target.querySelectorAll('.usecase-card');
                         cards.forEach((card, index) => {
                             setTimeout(() => {
@@ -85,12 +86,130 @@ export default function UseCasesPage() {
                 observer.unobserve(sectionRef.current);
             }
         };
-    }, [filteredCases, loading]);
+    }, [filteredCases, loading, useCases]);
 
     // ============================================================
-    // LOADING STATE
+    // SKELETON LOADER
     // ============================================================
     if (loading) {
+        return (
+            <>
+                {/* Hero Skeleton */}
+                <section className="relative bg-navy pt-40 pb-20 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-mid to-navy">
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(0,194,203,0.18)_0%,transparent_60%)]"></div>
+                    </div>
+                    <div className="container max-w-[1200px] mx-auto px-6 md:px-8 relative z-10">
+                        {/* Breadcrumb Skeleton */}
+                        <div className="flex items-center gap-2 mb-5">
+                            <div className="h-4 w-12 bg-white/10 rounded skeleton-pulse"></div>
+                            <span className="text-white/20">/</span>
+                            <div className="h-4 w-20 bg-white/20 rounded skeleton-pulse"></div>
+                        </div>
+
+                        {/* Tag Skeleton */}
+                        <div className="h-7 w-24 bg-white/10 rounded-full mb-4 skeleton-pulse"></div>
+
+                        {/* Title Skeleton */}
+                        <div className="space-y-3 mt-4">
+                            <div className="h-9 md:h-12 w-3/4 max-w-[450px] bg-white/15 rounded-lg skeleton-pulse"></div>
+                            <div className="h-9 md:h-12 w-1/2 max-w-[300px] bg-white/15 rounded-lg skeleton-pulse"></div>
+                        </div>
+
+                        {/* Description Skeleton */}
+                        <div className="space-y-2 mt-6 max-w-[640px]">
+                            <div className="h-4 w-full bg-white/10 rounded skeleton-pulse"></div>
+                            <div className="h-4 w-4/5 bg-white/10 rounded skeleton-pulse"></div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Content Skeleton */}
+                <section className="py-16 md:py-24 bg-white">
+                    <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                        {/* Filter Buttons Skeleton */}
+                        <div className="flex flex-wrap gap-2.5 justify-center mb-10">
+                            {[1, 2, 3, 4, 5].map((i) => (
+                                <div key={i} className="h-10 w-24 bg-grey-200 rounded-full skeleton-pulse"></div>
+                            ))}
+                        </div>
+
+                        {/* Use Cases Grid Skeleton */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                            {[1, 2, 3, 4, 5, 6].map((i) => (
+                                <div
+                                    key={i}
+                                    className="bg-white border border-grey-100 rounded-xl p-6 shadow-sm flex flex-col h-[260px]"
+                                >
+                                    {/* Tags Skeleton */}
+                                    <div className="flex flex-wrap gap-1.5 mb-3.5">
+                                        <div className="h-6 w-20 bg-off-white rounded-md skeleton-pulse"></div>
+                                        <div className="h-6 w-24 bg-blue/10 rounded-md skeleton-pulse"></div>
+                                    </div>
+
+                                    {/* Title Skeleton */}
+                                    <div className="h-5 w-3/4 bg-grey-200 rounded mb-2.5 skeleton-pulse"></div>
+
+                                    {/* Description Skeleton */}
+                                    <div className="space-y-1.5 flex-1">
+                                        <div className="h-3.5 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                        <div className="h-3.5 w-5/6 bg-grey-100 rounded skeleton-pulse"></div>
+                                        <div className="h-3.5 w-4/5 bg-grey-100 rounded skeleton-pulse"></div>
+                                    </div>
+
+                                    {/* Result Skeleton */}
+                                    <div className="mt-4 pt-4 border-t border-grey-100">
+                                        <div className="h-4 w-32 bg-blue/20 rounded skeleton-pulse"></div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Bottom CTA Skeleton */}
+                <section className="py-16 md:py-20 bg-navy-mid">
+                    <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+                            <div className="space-y-3 text-center lg:text-left">
+                                <div className="h-8 w-80 bg-white/10 rounded-lg skeleton-pulse"></div>
+                                <div className="h-8 w-56 bg-white/10 rounded-lg skeleton-pulse"></div>
+                                <div className="h-4 w-72 bg-white/10 rounded skeleton-pulse"></div>
+                            </div>
+                            <div className="flex flex-col gap-3 min-w-[200px]">
+                                <div className="h-12 w-full bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                                <div className="h-12 w-full bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Custom Skeleton Pulse Animation */}
+                <style jsx>{`
+                    .skeleton-pulse {
+                        animation: skeletonPulse 1.8s ease-in-out infinite;
+                    }
+                    
+                    @keyframes skeletonPulse {
+                        0% {
+                            opacity: 0.4;
+                        }
+                        50% {
+                            opacity: 0.7;
+                        }
+                        100% {
+                            opacity: 0.4;
+                        }
+                    }
+                `}</style>
+            </>
+        );
+    }
+
+    // ============================================================
+    // ERROR STATE
+    // ============================================================
+    if (error) {
         return (
             <>
                 <section className="relative bg-navy pt-40 pb-20 overflow-hidden">
@@ -114,11 +233,16 @@ export default function UseCasesPage() {
                         </p>
                     </div>
                 </section>
-                <section className="py-16 md:py-24 bg-white">
+                <section className="py-24 bg-white">
                     <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
-                        <div className="text-center">
-                            <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
-                            <p className="text-grey-400 mt-4">Loading use cases...</p>
+                        <div className="bg-red-50 border border-red-200 rounded-xl p-12 text-center">
+                            <p className="text-red-600 text-lg font-semibold">⚠️ {error}</p>
+                            <button
+                                onClick={() => window.location.reload()}
+                                className="mt-4 px-6 py-2 bg-cyan text-navy rounded-lg font-semibold hover:bg-cyan-light transition-colors"
+                            >
+                                Refresh Page
+                            </button>
                         </div>
                     </div>
                 </section>

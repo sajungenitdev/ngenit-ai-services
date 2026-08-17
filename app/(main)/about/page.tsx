@@ -42,7 +42,6 @@ export default function AboutPage() {
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        // Animate header
                         const header = entry.target.querySelector('.about-header');
                         if (header) {
                             setTimeout(() => {
@@ -50,7 +49,6 @@ export default function AboutPage() {
                             }, 100);
                         }
 
-                        // Animate content sections with stagger
                         const sections = entry.target.querySelectorAll('.about-section');
                         sections.forEach((section, index) => {
                             setTimeout(() => {
@@ -78,28 +76,38 @@ export default function AboutPage() {
     }, [loading, data]);
 
     // ============================================================
-    // LOADING STATE
+    // SKELETON LOADER
     // ============================================================
     if (loading) {
         return (
             <>
-                {/* Page Hero Skeleton */}
+                {/* Hero Skeleton */}
                 <section className="relative bg-navy pt-40 pb-20 overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-mid to-navy">
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(0,194,203,0.18)_0%,transparent_60%)]"></div>
                     </div>
                     <div className="container max-w-[1200px] mx-auto px-6 md:px-8 relative z-10">
-                        <div className="flex items-center gap-2 text-white/40 text-sm mb-5 flex-wrap">
-                            <Link href="/" className="hover:text-cyan transition-colors">Home</Link>
-                            <span>/</span>
-                            <span className="text-white/80">About Us</span>
+                        {/* Breadcrumb Skeleton */}
+                        <div className="flex items-center gap-2 mb-5">
+                            <div className="h-4 w-12 bg-white/10 rounded skeleton-pulse"></div>
+                            <span className="text-white/20">/</span>
+                            <div className="h-4 w-16 bg-white/20 rounded skeleton-pulse"></div>
                         </div>
-                        <span className="inline-block px-3.5 py-1.5 rounded-full text-[0.78rem] font-semibold tracking-wide uppercase bg-cyan/15 text-cyan">
-                            About NGEN IT
-                        </span>
-                        <div className="animate-pulse">
-                            <div className="h-12 w-3/4 bg-white/10 rounded-lg mt-4"></div>
-                            <div className="h-6 w-1/2 bg-white/10 rounded-lg mt-4"></div>
+
+                        {/* Tag Skeleton */}
+                        <div className="h-7 w-28 bg-white/10 rounded-full mb-4 skeleton-pulse"></div>
+
+                        {/* Title Skeleton */}
+                        <div className="space-y-3 mt-4">
+                            <div className="h-9 md:h-12 w-3/4 max-w-[500px] bg-white/15 rounded-lg skeleton-pulse"></div>
+                            <div className="h-9 md:h-12 w-1/2 max-w-[350px] bg-white/15 rounded-lg skeleton-pulse"></div>
+                        </div>
+
+                        {/* Description Skeleton */}
+                        <div className="space-y-2 mt-6 max-w-[640px]">
+                            <div className="h-4 w-full bg-white/10 rounded skeleton-pulse"></div>
+                            <div className="h-4 w-4/5 bg-white/10 rounded skeleton-pulse"></div>
+                            <div className="h-4 w-3/4 bg-white/10 rounded skeleton-pulse"></div>
                         </div>
                     </div>
                 </section>
@@ -107,29 +115,113 @@ export default function AboutPage() {
                 {/* Content Skeleton */}
                 <section className="py-16 md:py-24 bg-white">
                     <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
-                        <div className="animate-pulse space-y-12">
+                        <div className="space-y-16">
+                            {/* Story Section Skeleton */}
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                                 <div className="space-y-4">
-                                    <div className="h-6 w-24 bg-grey-200 rounded-full"></div>
-                                    <div className="h-8 w-3/4 bg-grey-200 rounded-lg"></div>
-                                    <div className="h-4 w-full bg-grey-200 rounded-lg"></div>
-                                    <div className="h-4 w-full bg-grey-200 rounded-lg"></div>
-                                    <div className="h-4 w-2/3 bg-grey-200 rounded-lg"></div>
+                                    <div className="h-6 w-24 bg-grey-200 rounded-full skeleton-pulse"></div>
+                                    <div className="h-8 w-3/4 bg-grey-200 rounded-lg skeleton-pulse"></div>
+                                    <div className="h-8 w-1/2 bg-grey-200 rounded-lg skeleton-pulse"></div>
+                                    <div className="space-y-2">
+                                        <div className="h-4 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                        <div className="h-4 w-5/6 bg-grey-100 rounded skeleton-pulse"></div>
+                                        <div className="h-4 w-4/5 bg-grey-100 rounded skeleton-pulse"></div>
+                                        <div className="h-4 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                        <div className="h-4 w-2/3 bg-grey-100 rounded skeleton-pulse"></div>
+                                    </div>
                                 </div>
-                                <div className="space-y-6">
-                                    <div className="h-16 w-full bg-grey-200 rounded-lg"></div>
-                                    <div className="h-16 w-full bg-grey-200 rounded-lg"></div>
-                                    <div className="h-16 w-full bg-grey-200 rounded-lg"></div>
+
+                                {/* Timeline Skeleton */}
+                                <div className="space-y-6 pl-8 border-l-2 border-grey-200">
+                                    {[1, 2, 3, 4, 5].map((i) => (
+                                        <div key={i} className="relative pb-6 last:pb-0">
+                                            <div className="absolute -left-[38px] top-1.5 w-3.5 h-3.5 rounded-full bg-cyan/30 skeleton-pulse"></div>
+                                            <div className="h-4 w-16 bg-grey-200 rounded skeleton-pulse"></div>
+                                            <div className="h-5 w-3/4 bg-grey-200 rounded skeleton-pulse mt-1"></div>
+                                            <div className="space-y-1 mt-1">
+                                                <div className="h-3 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                                <div className="h-3 w-5/6 bg-grey-100 rounded skeleton-pulse"></div>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                                {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className="h-40 bg-grey-200 rounded-xl"></div>
-                                ))}
+
+                            {/* Values Skeleton */}
+                            <div>
+                                <div className="text-center mb-12">
+                                    <div className="h-6 w-24 bg-grey-200 rounded-full skeleton-pulse mx-auto"></div>
+                                    <div className="h-8 w-56 bg-grey-200 rounded-lg skeleton-pulse mx-auto mt-4"></div>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                                    {[1, 2, 3, 4].map((i) => (
+                                        <div key={i} className="bg-white border border-grey-100 rounded-xl p-7 text-center">
+                                            <div className="w-12 h-12 bg-grey-200 rounded-full skeleton-pulse mx-auto mb-3.5"></div>
+                                            <div className="h-5 w-24 bg-grey-200 rounded skeleton-pulse mx-auto mb-2"></div>
+                                            <div className="space-y-1">
+                                                <div className="h-3 w-full bg-grey-100 rounded skeleton-pulse mx-auto"></div>
+                                                <div className="h-3 w-3/4 bg-grey-100 rounded skeleton-pulse mx-auto"></div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Offices Skeleton */}
+                            <div>
+                                <div className="text-center mb-12">
+                                    <div className="h-6 w-24 bg-grey-200 rounded-full skeleton-pulse mx-auto"></div>
+                                    <div className="h-8 w-48 bg-grey-200 rounded-lg skeleton-pulse mx-auto mt-4"></div>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                                    {[1, 2, 3, 4].map((i) => (
+                                        <div key={i} className="bg-off-white rounded-xl p-6">
+                                            <div className="w-12 h-12 bg-grey-200 rounded-full skeleton-pulse mb-3"></div>
+                                            <div className="h-5 w-24 bg-grey-200 rounded skeleton-pulse mb-2"></div>
+                                            <div className="h-3 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
+
+                {/* Bottom CTA Skeleton */}
+                <section className="py-16 md:py-20 bg-navy-mid">
+                    <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+                            <div className="space-y-3 text-center lg:text-left">
+                                <div className="h-8 w-64 bg-white/10 rounded-lg skeleton-pulse"></div>
+                                <div className="h-8 w-48 bg-white/10 rounded-lg skeleton-pulse"></div>
+                                <div className="h-4 w-80 bg-white/10 rounded skeleton-pulse"></div>
+                            </div>
+                            <div className="flex flex-col gap-3 min-w-[200px]">
+                                <div className="h-12 w-full bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                                <div className="h-12 w-full bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Custom Skeleton Pulse Animation */}
+                <style jsx>{`
+                    .skeleton-pulse {
+                        animation: skeletonPulse 1.8s ease-in-out infinite;
+                    }
+                    
+                    @keyframes skeletonPulse {
+                        0% {
+                            opacity: 0.4;
+                        }
+                        50% {
+                            opacity: 0.7;
+                        }
+                        100% {
+                            opacity: 0.4;
+                        }
+                    }
+                `}</style>
             </>
         );
     }
@@ -244,7 +336,7 @@ export default function AboutPage() {
                                     <h4 className="text-navy text-sm font-semibold mt-1">
                                         {milestone.title}
                                     </h4>
-                                    <p className="text-black text-sm leading-relaxed">
+                                    <p className="text-grey-600 text-sm leading-relaxed">
                                         {milestone.description}
                                     </p>
                                 </div>

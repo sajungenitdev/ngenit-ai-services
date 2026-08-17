@@ -89,15 +89,122 @@ export default function Hero() {
     }, []);
 
     // ============================================================
-    // LOADING STATE
+    // SKELETON LOADER
     // ============================================================
     if (loading) {
         return (
-            <section className="relative min-h-screen bg-navy flex items-center justify-center overflow-hidden pt-[68px]">
-                <div className="text-center">
-                    <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
-                    <p className="text-white/60 mt-4">Loading...</p>
+            <section className="relative min-h-screen bg-navy flex items-center overflow-hidden pt-[68px]">
+                {/* Background Skeleton */}
+                <div className="absolute inset-0 z-0 bg-gradient-to-br from-navy via-navy-mid to-navy">
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_70%_50%,rgba(30,95,212,0.25)_0%,transparent_60%)]"></div>
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_20%_80%,rgba(0,194,203,0.15)_0%,transparent_50%)]"></div>
                 </div>
+
+                <div className="container max-w-[1200px] mx-auto px-6 relative z-10 w-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center py-20 lg:py-28">
+                        {/* Left Side Skeleton */}
+                        <div className="relative z-10 text-center lg:text-left">
+                            {/* Badge Skeleton */}
+                            <div className="h-8 w-48 bg-white/10 rounded-full mb-6 skeleton-pulse mx-auto lg:mx-0"></div>
+
+                            {/* Title Skeleton */}
+                            <div className="space-y-3 mb-6">
+                                <div className="h-10 md:h-14 w-full max-w-[400px] bg-white/15 rounded-lg skeleton-pulse mx-auto lg:mx-0"></div>
+                                <div className="h-10 md:h-14 w-3/4 max-w-[300px] bg-white/15 rounded-lg skeleton-pulse mx-auto lg:mx-0"></div>
+                            </div>
+
+                            {/* Subtitle Skeleton */}
+                            <div className="space-y-2 mb-10 max-w-[520px] mx-auto lg:mx-0">
+                                <div className="h-4 w-full bg-white/10 rounded skeleton-pulse"></div>
+                                <div className="h-4 w-5/6 bg-white/10 rounded skeleton-pulse"></div>
+                                <div className="h-4 w-4/5 bg-white/10 rounded skeleton-pulse"></div>
+                            </div>
+
+                            {/* Buttons Skeleton */}
+                            <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-12">
+                                <div className="h-12 w-48 bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                                <div className="h-12 w-40 bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                            </div>
+
+                            {/* Stats Skeleton */}
+                            <div className="flex flex-wrap gap-8 justify-center lg:justify-start pt-8 border-t border-white/10">
+                                {[1, 2, 3, 4].map((i) => (
+                                    <div key={i} className="text-center lg:text-left">
+                                        <div className="h-8 w-16 bg-cyan/30 rounded skeleton-pulse mx-auto lg:mx-0"></div>
+                                        <div className="h-3 w-20 bg-white/20 rounded skeleton-pulse mt-1 mx-auto lg:mx-0"></div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Right Side - Dashboard Skeleton */}
+                        <div className="relative flex justify-center items-center">
+                            {/* Floating Card 1 Skeleton */}
+                            <div className="absolute top-[-20px] left-[-40px] bg-white/10 rounded-xl px-4 py-3 shadow-2xl flex items-center gap-2.5 z-0 hidden lg:flex">
+                                <div className="w-2 h-2 rounded-full bg-cyan/30 skeleton-pulse"></div>
+                                <div className="h-4 w-32 bg-white/20 rounded skeleton-pulse"></div>
+                            </div>
+
+                            {/* Dashboard Card Skeleton */}
+                            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[20px] p-7 w-full max-w-[440px] shadow-[0_32px_80px_rgba(0,0,0,0.4)] z-10">
+                                {/* Header dots Skeleton */}
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-2.5 h-2.5 rounded-full bg-white/20 skeleton-pulse"></div>
+                                    <div className="w-2.5 h-2.5 rounded-full bg-white/20 skeleton-pulse"></div>
+                                    <div className="w-2.5 h-2.5 rounded-full bg-white/20 skeleton-pulse"></div>
+                                    <div className="h-4 w-32 bg-white/20 rounded skeleton-pulse ml-auto"></div>
+                                </div>
+
+                                {/* Services Grid Skeleton */}
+                                <div className="grid grid-cols-2 gap-2.5 mb-5">
+                                    {[1, 2, 3, 4].map((i) => (
+                                        <div key={i} className="bg-white/5 rounded-xl p-3.5 border border-white/5">
+                                            <div className="w-8 h-8 bg-white/10 rounded skeleton-pulse mb-2"></div>
+                                            <div className="h-4 w-16 bg-white/20 rounded skeleton-pulse"></div>
+                                            <div className="h-3 w-12 bg-cyan/30 rounded skeleton-pulse mt-0.5"></div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Metrics Skeleton */}
+                                <div className="flex gap-2.5">
+                                    {[1, 2, 3].map((i) => (
+                                        <div key={i} className="flex-1 bg-white/5 rounded-[8px] p-3 border border-white/5">
+                                            <div className="h-6 w-12 bg-white/20 rounded skeleton-pulse"></div>
+                                            <div className="h-3 w-16 bg-white/20 rounded skeleton-pulse mt-0.5"></div>
+                                            <div className="h-3 w-12 bg-cyan/30 rounded skeleton-pulse mt-1"></div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Floating Card 2 Skeleton */}
+                            <div className="absolute bottom-5 z-10 right-[-30px] bg-white/10 rounded-xl px-4 py-3 shadow-2xl flex items-center gap-2.5 z-0 hidden lg:flex">
+                                <div className="w-2 h-2 rounded-full bg-cyan/30 skeleton-pulse"></div>
+                                <div className="h-4 w-32 bg-white/20 rounded skeleton-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Custom Skeleton Pulse Animation */}
+                <style jsx>{`
+                    .skeleton-pulse {
+                        animation: skeletonPulse 1.8s ease-in-out infinite;
+                    }
+                    
+                    @keyframes skeletonPulse {
+                        0% {
+                            opacity: 0.4;
+                        }
+                        50% {
+                            opacity: 0.7;
+                        }
+                        100% {
+                            opacity: 0.4;
+                        }
+                    }
+                `}</style>
             </section>
         );
     }

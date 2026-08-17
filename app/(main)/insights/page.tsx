@@ -21,12 +21,12 @@ export default function InsightsPage() {
             try {
                 setLoading(true);
                 setError(null);
-                
+
                 const [insightsData, categoriesData] = await Promise.all([
                     getInsights({ active: true }),
                     getCategories(),
                 ]);
-                
+
                 setInsights(insightsData);
                 setCategories(categoriesData);
             } catch (error: any) {
@@ -45,13 +45,17 @@ export default function InsightsPage() {
     // ============================================================
     const filteredInsights = selectedCategory === "all"
         ? insights
-        : insights.filter(i => i.cat === selectedCategory);
+        : insights.filter(i => {
+            // Fallback checks for common property naming variations
+            const categoryValue = i.cat || (i as any).category;
+            return categoryValue === selectedCategory;
+        });
 
     // ============================================================
     // SCROLL ANIMATION
     // ============================================================
     useEffect(() => {
-        if (loading || insights.length === 0) return;
+        if (loading || filteredInsights.length === 0) return;
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -59,24 +63,17 @@ export default function InsightsPage() {
                     if (entry.isIntersecting) {
                         const header = entry.target.querySelector('.insights-header');
                         if (header) {
-                            setTimeout(() => {
-                                header.classList.add('visible');
-                            }, 100);
+                            setTimeout(() => header.classList.add('visible'), 100);
                         }
 
                         const cards = entry.target.querySelectorAll('.insight-card');
                         cards.forEach((card, index) => {
-                            setTimeout(() => {
-                                card.classList.add('visible');
-                            }, 200 + index * 100);
+                            setTimeout(() => card.classList.add('visible'), 100 + index * 80);
                         });
                     }
                 });
             },
-            {
-                threshold: 0.1,
-                rootMargin: "0px 0px -50px 0px"
-            }
+            { threshold: 0.05, rootMargin: "0px 0px -20px 0px" }
         );
 
         if (sectionRef.current) {
@@ -88,10 +85,10 @@ export default function InsightsPage() {
                 observer.unobserve(sectionRef.current);
             }
         };
-    }, [loading, insights]);
+    }, [loading, selectedCategory, filteredInsights.length]); // Added selectedCategory dependency
 
     // ============================================================
-    // LOADING STATE
+    // SKELETON LOADER
     // ============================================================
     if (loading) {
         return (
@@ -101,32 +98,76 @@ export default function InsightsPage() {
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(0,194,203,0.18)_0%,transparent_60%)]"></div>
                     </div>
                     <div className="container max-w-[1200px] mx-auto px-6 md:px-8 relative z-10">
-                        <div className="flex items-center gap-2 text-white/40 text-sm mb-5 flex-wrap">
-                            <Link href="/" className="hover:text-cyan transition-colors">Home</Link>
-                            <span>/</span>
-                            <span className="text-white/80">Insights</span>
+                        <div className="flex items-center gap-2 mb-5">
+                            <div className="h-4 w-12 bg-white/10 rounded skeleton-pulse"></div>
+                            <span className="text-white/20">/</span>
+                            <div className="h-4 w-16 bg-white/20 rounded skeleton-pulse"></div>
                         </div>
-                        <span className="inline-block px-3.5 py-1.5 rounded-full text-[0.78rem] font-semibold tracking-wide uppercase bg-cyan/15 text-cyan">
-                            Insights &amp; Blog
-                        </span>
-                        <h1 className="text-white text-[clamp(2rem,4vw,2.9rem)] font-extrabold font-plus-jakarta leading-[1.15] mt-4">
-                            AI Insights for<br />Business Leaders
-                        </h1>
-                        <p className="text-white/60 text-[1.05rem] max-w-[640px] leading-relaxed mt-4">
-                            Practical thinking on AI strategy, implementation and results.
-                        </p>
+                        <div className="h-7 w-32 bg-white/10 rounded-full mb-4 skeleton-pulse"></div>
+                        <div className="space-y-3 mt-4">
+                            <div className="h-9 md:h-12 w-3/4 max-w-[450px] bg-white/15 rounded-lg skeleton-pulse"></div>
+                            <div className="h-9 md:h-12 w-1/2 max-w-[300px] bg-white/15 rounded-lg skeleton-pulse"></div>
+                        </div>
+                        <div className="space-y-2 mt-6 max-w-[640px]">
+                            <div className="h-4 w-full bg-white/10 rounded skeleton-pulse"></div>
+                            <div className="h-4 w-4/5 bg-white/10 rounded skeleton-pulse"></div>
+                        </div>
                     </div>
                 </section>
-                <section className="py-24 bg-white">
+                <section className="py-16 md:py-24 bg-white">
                     <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
-                        <div className="flex items-center justify-center h-64">
-                            <div className="text-center">
-                                <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
-                                <p className="text-grey-400 mt-4">Loading insights...</p>
+                        <div className="flex flex-wrap gap-2.5 justify-center mb-10">
+                            {[1, 2, 3, 4, 5].map((i) => (
+                                <div key={i} className="h-10 w-20 bg-grey-200 rounded-full skeleton-pulse"></div>
+                            ))}
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {[1, 2, 3, 4, 5, 6].map((i) => (
+                                <div key={i} className="bg-white border border-grey-100 rounded-xl overflow-hidden shadow-sm flex flex-col">
+                                    <div className="h-36 bg-grey-200 skeleton-pulse"></div>
+                                    <div className="p-6 space-y-3">
+                                        <div className="flex items-center gap-2.5">
+                                            <div className="h-5 w-16 bg-grey-200 rounded-md skeleton-pulse"></div>
+                                            <div className="h-3 w-20 bg-grey-100 rounded skeleton-pulse"></div>
+                                        </div>
+                                        <div className="h-5 w-3/4 bg-grey-200 rounded skeleton-pulse"></div>
+                                        <div className="space-y-1.5">
+                                            <div className="h-3.5 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                            <div className="h-3.5 w-5/6 bg-grey-100 rounded skeleton-pulse"></div>
+                                            <div className="h-3.5 w-4/5 bg-grey-100 rounded skeleton-pulse"></div>
+                                        </div>
+                                        <div className="h-4 w-24 bg-cyan/20 rounded skeleton-pulse"></div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+                <section className="py-16 md:py-20 bg-navy-mid">
+                    <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+                            <div className="space-y-3 text-center lg:text-left">
+                                <div className="h-8 w-80 bg-white/10 rounded-lg skeleton-pulse"></div>
+                                <div className="h-8 w-56 bg-white/10 rounded-lg skeleton-pulse"></div>
+                                <div className="h-4 w-72 bg-white/10 rounded skeleton-pulse"></div>
+                            </div>
+                            <div className="flex flex-col gap-3 min-w-[200px]">
+                                <div className="h-12 w-full bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                                <div className="h-12 w-full bg-white/10 rounded-[8px] skeleton-pulse"></div>
                             </div>
                         </div>
                     </div>
                 </section>
+                <style jsx>{`
+                    .skeleton-pulse {
+                        animation: skeletonPulse 1.8s ease-in-out infinite;
+                    }
+                    @keyframes skeletonPulse {
+                        0% { opacity: 0.4; }
+                        50% { opacity: 0.7; }
+                        100% { opacity: 0.4; }
+                    }
+                `}</style>
             </>
         );
     }
@@ -212,11 +253,10 @@ export default function InsightsPage() {
                             <div className="flex flex-wrap gap-2.5 justify-center mb-10">
                                 <button
                                     onClick={() => setSelectedCategory("all")}
-                                    className={`px-4 py-2 rounded-full text-sm font-semibold border-2 transition-all duration-300 ${
-                                        selectedCategory === "all"
-                                            ? "border-cyan bg-cyan text-navy"
-                                            : "border-grey-200 bg-white text-grey-600 hover:border-cyan hover:text-navy"
-                                    }`}
+                                    className={`px-4 py-2 rounded-full text-sm font-semibold border-2 transition-all duration-300 ${selectedCategory === "all"
+                                        ? "border-cyan bg-cyan text-navy"
+                                        : "border-grey-200 bg-white text-grey-600 hover:border-cyan hover:text-navy"
+                                        }`}
                                 >
                                     All
                                 </button>
@@ -224,11 +264,10 @@ export default function InsightsPage() {
                                     <button
                                         key={category}
                                         onClick={() => setSelectedCategory(category)}
-                                        className={`px-4 py-2 rounded-full text-sm font-semibold border-2 transition-all duration-300 ${
-                                            selectedCategory === category
-                                                ? "border-cyan bg-cyan text-navy"
-                                                : "border-grey-200 bg-white text-grey-600 hover:border-cyan hover:text-navy"
-                                        }`}
+                                        className={`px-4 py-2 rounded-full text-sm font-semibold border-2 transition-all duration-300 ${selectedCategory === category
+                                            ? "border-cyan bg-cyan text-navy"
+                                            : "border-grey-200 bg-white text-grey-600 hover:border-cyan hover:text-navy"
+                                            }`}
                                     >
                                         {category}
                                     </button>
@@ -239,13 +278,24 @@ export default function InsightsPage() {
 
                     {/* Insights Grid */}
                     {filteredInsights.length === 0 ? (
-                        <div className="bg-off-white rounded-xl p-12 text-center">
-                            <h3 className="text-lg font-semibold text-navy mb-2">No insights found</h3>
-                            <p className="text-grey-400">
+                        <div className="bg-off-white rounded-xl p-16 text-center max-w-2xl mx-auto border border-dashed border-grey-200">
+                            <div className="text-6xl mb-4">📭</div>
+                            <h3 className="text-xl font-semibold text-navy mb-2 font-plus-jakarta">
+                                No insights found
+                            </h3>
+                            <p className="text-grey-400 mb-3">
                                 {selectedCategory !== "all"
-                                    ? `No insights available in "${selectedCategory}" category`
-                                    : "Check back later for new insights"}
+                                    ? `We don't have any insights in "${selectedCategory}" category yet.`
+                                    : "We haven't published any insights yet. Check back soon!"}
                             </p>
+                            {selectedCategory !== "all" && (
+                                <button
+                                    onClick={() => setSelectedCategory("all")}
+                                    className="text-cyan hover:underline font-medium inline-flex items-center gap-1"
+                                >
+                                    View all insights →
+                                </button>
+                            )}
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -276,7 +326,6 @@ export default function InsightsPage() {
                                             <p className="text-[0.85rem] text-grey-400 leading-relaxed">
                                                 {insight.excerpt}
                                             </p>
-                                            {/* Read More Link */}
                                             <div className="mt-4 flex items-center text-sm font-medium text-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                                 Read Article →
                                             </div>

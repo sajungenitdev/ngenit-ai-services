@@ -7,7 +7,7 @@ import {
     ContactPageData, 
     ServiceOption, 
     ContactMethod 
-} from "@/types/admin/contactPage"; // Add ContactMethod
+} from "@/types/admin/contactPage";
 import ContactForm from "@/components/Home/ConsultSection/ContactForm";
 
 export default function ContactPage() {
@@ -113,15 +113,181 @@ export default function ContactPage() {
     };
 
     // ============================================================
-    // LOADING STATE
+    // SKELETON LOADER
     // ============================================================
     if (loading) {
         return (
-            <div className="min-h-screen bg-navy flex items-center justify-center">
-                <div className="text-center">
-                    <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
-                    <p className="text-white/60 mt-4">Loading contact page...</p>
-                </div>
+            <div className="min-h-screen bg-white">
+                {/* Hero Skeleton */}
+                <section className="relative bg-navy pt-40 pb-20 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-mid to-navy">
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(0,194,203,0.18)_0%,transparent_60%)]"></div>
+                    </div>
+                    <div className="container max-w-[1200px] mx-auto px-6 md:px-8 relative z-10">
+                        {/* Breadcrumb Skeleton */}
+                        <div className="flex items-center gap-2 mb-5">
+                            <div className="h-4 w-12 bg-white/10 rounded skeleton-pulse"></div>
+                            <span className="text-white/20">/</span>
+                            <div className="h-4 w-16 bg-white/20 rounded skeleton-pulse"></div>
+                            <span className="text-white/20">/</span>
+                            <div className="h-4 w-32 bg-white/20 rounded skeleton-pulse"></div>
+                        </div>
+
+                        {/* Tag Skeleton */}
+                        <div className="h-7 w-28 bg-white/10 rounded-full mb-4 skeleton-pulse"></div>
+
+                        {/* Title Skeleton */}
+                        <div className="space-y-3 mt-4">
+                            <div className="h-9 md:h-12 w-3/4 max-w-[500px] bg-white/15 rounded-lg skeleton-pulse"></div>
+                            <div className="h-9 md:h-12 w-1/2 max-w-[350px] bg-white/15 rounded-lg skeleton-pulse"></div>
+                        </div>
+
+                        {/* Description Skeleton */}
+                        <div className="space-y-2 mt-6 max-w-[640px]">
+                            <div className="h-4 w-full bg-white/10 rounded skeleton-pulse"></div>
+                            <div className="h-4 w-4/5 bg-white/10 rounded skeleton-pulse"></div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Content Skeleton */}
+                <section className="py-16 md:py-24 bg-off-white">
+                    <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+                            {/* Left Side Skeleton */}
+                            <div className="space-y-6">
+                                {/* Tag Skeleton */}
+                                <div className="h-7 w-24 bg-cyan/15 rounded-full skeleton-pulse"></div>
+                                
+                                {/* Title Skeleton */}
+                                <div className="space-y-2">
+                                    <div className="h-9 w-64 bg-grey-200 rounded-lg skeleton-pulse"></div>
+                                    <div className="h-9 w-48 bg-grey-200 rounded-lg skeleton-pulse"></div>
+                                </div>
+                                
+                                {/* Description Skeleton */}
+                                <div className="space-y-2">
+                                    <div className="h-4 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                    <div className="h-4 w-5/6 bg-grey-100 rounded skeleton-pulse"></div>
+                                    <div className="h-4 w-4/5 bg-grey-100 rounded skeleton-pulse"></div>
+                                </div>
+
+                                {/* Contact Methods Skeleton */}
+                                <div className="space-y-3 mt-6">
+                                    {[1, 2, 3].map((i) => (
+                                        <div key={i} className="flex items-center gap-4 p-4 bg-white rounded-xl border border-grey-100">
+                                            <div className="w-11 h-11 rounded-xl bg-grey-200 shrink-0 skeleton-pulse"></div>
+                                            <div className="flex-1 space-y-1.5">
+                                                <div className="h-4 w-32 bg-grey-200 rounded skeleton-pulse"></div>
+                                                <div className="h-3 w-48 bg-grey-100 rounded skeleton-pulse"></div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Right Side - Form Skeleton */}
+                            <div className="bg-white rounded-2xl p-10 shadow-md border border-grey-100">
+                                {/* Form Title Skeleton */}
+                                <div className="h-6 w-48 bg-grey-200 rounded skeleton-pulse mb-2"></div>
+                                <div className="h-4 w-64 bg-grey-100 rounded skeleton-pulse mb-6"></div>
+
+                                {/* Form Fields Skeleton */}
+                                <div className="space-y-4">
+                                    {/* Row 1 */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div className="space-y-1.5">
+                                            <div className="h-3.5 w-20 bg-grey-200 rounded skeleton-pulse"></div>
+                                            <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                        </div>
+                                        <div className="space-y-1.5">
+                                            <div className="h-3.5 w-24 bg-grey-200 rounded skeleton-pulse"></div>
+                                            <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                        </div>
+                                    </div>
+
+                                    {/* Row 2 */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div className="space-y-1.5">
+                                            <div className="h-3.5 w-24 bg-grey-200 rounded skeleton-pulse"></div>
+                                            <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                        </div>
+                                        <div className="space-y-1.5">
+                                            <div className="h-3.5 w-28 bg-grey-200 rounded skeleton-pulse"></div>
+                                            <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                        </div>
+                                    </div>
+
+                                    {/* Row 3 */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div className="space-y-1.5">
+                                            <div className="h-3.5 w-16 bg-grey-200 rounded skeleton-pulse"></div>
+                                            <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                        </div>
+                                        <div className="space-y-1.5">
+                                            <div className="h-3.5 w-28 bg-grey-200 rounded skeleton-pulse"></div>
+                                            <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                        </div>
+                                    </div>
+
+                                    {/* Message */}
+                                    <div className="space-y-1.5">
+                                        <div className="h-3.5 w-28 bg-grey-200 rounded skeleton-pulse"></div>
+                                        <div className="h-28 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                    </div>
+
+                                    {/* Consent */}
+                                    <div className="flex gap-2.5 items-start">
+                                        <div className="w-4 h-4 bg-grey-200 rounded skeleton-pulse mt-1"></div>
+                                        <div className="flex-1 space-y-1">
+                                            <div className="h-3 w-48 bg-grey-100 rounded skeleton-pulse"></div>
+                                            <div className="h-3 w-32 bg-grey-100 rounded skeleton-pulse"></div>
+                                        </div>
+                                    </div>
+
+                                    {/* Submit Button */}
+                                    <div className="h-14 w-full bg-cyan/30 rounded-[8px] skeleton-pulse"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Bottom CTA Skeleton */}
+                <section className="py-16 md:py-20 bg-navy-mid">
+                    <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+                            <div className="space-y-3 text-center lg:text-left">
+                                <div className="h-8 w-72 bg-white/10 rounded-lg skeleton-pulse"></div>
+                                <div className="h-8 w-56 bg-white/10 rounded-lg skeleton-pulse"></div>
+                                <div className="h-4 w-64 bg-white/10 rounded skeleton-pulse"></div>
+                            </div>
+                            <div className="flex flex-col gap-3 min-w-[200px]">
+                                <div className="h-12 w-full bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                                <div className="h-12 w-full bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Custom Skeleton Pulse Animation */}
+                <style jsx>{`
+                    .skeleton-pulse {
+                        animation: skeletonPulse 1.8s ease-in-out infinite;
+                    }
+                    
+                    @keyframes skeletonPulse {
+                        0% {
+                            opacity: 0.4;
+                        }
+                        50% {
+                            opacity: 0.7;
+                        }
+                        100% {
+                            opacity: 0.4;
+                        }
+                    }
+                `}</style>
             </div>
         );
     }

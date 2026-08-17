@@ -9,6 +9,7 @@ export default function WhyNgenSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [data, setData] = useState<WhyNgenData | null>(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     // ============================================================
     // FETCH WHY NGEN
@@ -17,10 +18,12 @@ export default function WhyNgenSection() {
         const fetchData = async () => {
             try {
                 setLoading(true);
+                setError(null);
                 const result = await getWhyNgen();
                 setData(result);
-            } catch (error) {
+            } catch (error: any) {
                 console.error("Error fetching why ngen:", error);
+                setError(error.message || "Failed to load data");
             } finally {
                 setLoading(false);
             }
@@ -33,7 +36,7 @@ export default function WhyNgenSection() {
     // SCROLL ANIMATION
     // ============================================================
     useEffect(() => {
-        if (loading) return;
+        if (loading || !data) return;
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -70,24 +73,111 @@ export default function WhyNgenSection() {
                 observer.unobserve(sectionRef.current);
             }
         };
-    }, [loading]);
+    }, [loading, data]);
 
     // ============================================================
-    // LOADING STATE
+    // SKELETON LOADER
     // ============================================================
     if (loading) {
         return (
             <section className="py-24 md:py-32 bg-navy-mid" ref={sectionRef}>
                 <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        {/* Left Side Skeleton */}
+                        <div className="space-y-4">
+                            {/* Badge Skeleton */}
+                            <div className="h-7 w-32 bg-white/10 rounded-full skeleton-pulse"></div>
+                            
+                            {/* Title Skeleton */}
+                            <div className="space-y-2">
+                                <div className="h-8 md:h-10 w-3/4 max-w-[400px] bg-white/15 rounded skeleton-pulse"></div>
+                                <div className="h-8 md:h-10 w-1/2 max-w-[300px] bg-white/15 rounded skeleton-pulse"></div>
+                            </div>
+                            
+                            {/* Description Skeleton */}
+                            <div className="space-y-2">
+                                <div className="h-4 w-full bg-white/10 rounded skeleton-pulse"></div>
+                                <div className="h-4 w-5/6 bg-white/10 rounded skeleton-pulse"></div>
+                                <div className="h-4 w-4/5 bg-white/10 rounded skeleton-pulse"></div>
+                                <div className="h-4 w-3/4 bg-white/10 rounded skeleton-pulse"></div>
+                            </div>
+                            
+                            {/* Button Skeleton */}
+                            <div className="h-12 w-48 bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                        </div>
+
+                        {/* Right Side - Feature Cards Skeleton */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {[1, 2, 3, 4].map((i) => (
+                                <div
+                                    key={i}
+                                    className="bg-white/5 rounded-xl p-6 border border-white/10 flex flex-col h-[160px]"
+                                >
+                                    {/* Icon Skeleton */}
+                                    <div className="w-8 h-8 bg-white/10 rounded skeleton-pulse mb-3"></div>
+                                    
+                                    {/* Title Skeleton */}
+                                    <div className="h-4 w-3/4 bg-white/15 rounded skeleton-pulse mb-2"></div>
+                                    
+                                    {/* Description Skeleton */}
+                                    <div className="space-y-1 flex-1">
+                                        <div className="h-3 w-full bg-white/10 rounded skeleton-pulse"></div>
+                                        <div className="h-3 w-4/5 bg-white/10 rounded skeleton-pulse"></div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Custom Skeleton Pulse Animation */}
+                <style jsx>{`
+                    .skeleton-pulse {
+                        animation: skeletonPulse 1.8s ease-in-out infinite;
+                    }
+                    
+                    @keyframes skeletonPulse {
+                        0% {
+                            opacity: 0.4;
+                        }
+                        50% {
+                            opacity: 0.7;
+                        }
+                        100% {
+                            opacity: 0.4;
+                        }
+                    }
+                `}</style>
+            </section>
+        );
+    }
+
+    // ============================================================
+    // ERROR STATE
+    // ============================================================
+    if (error) {
+        return (
+            <section className="py-24 md:py-32 bg-navy-mid" ref={sectionRef}>
+                <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
                     <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
-                        <p className="text-white/60 mt-4">Loading...</p>
+                        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-8">
+                            <p className="text-red-400 font-semibold">⚠️ {error}</p>
+                            <button
+                                onClick={() => window.location.reload()}
+                                className="mt-4 px-6 py-2 bg-cyan text-navy rounded-lg font-semibold hover:bg-cyan-light transition-colors"
+                            >
+                                Refresh Page
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
         );
     }
 
+    // ============================================================
+    // DON'T RENDER IF NOT ACTIVE
+    // ============================================================
     if (!data || !data.isActive) {
         return null;
     }

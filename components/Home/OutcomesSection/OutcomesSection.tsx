@@ -8,6 +8,7 @@ export default function OutcomesSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [outcomes, setOutcomes] = useState<OutcomeData[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     // ============================================================
     // FETCH OUTCOMES
@@ -16,11 +17,13 @@ export default function OutcomesSection() {
         const fetchOutcomes = async () => {
             try {
                 setLoading(true);
+                setError(null);
                 const data = await getOutcomes();
                 // Only show active outcomes on frontend
                 setOutcomes(data.filter(o => o.isActive !== false));
-            } catch (error) {
+            } catch (error: any) {
                 console.error("Error fetching outcomes:", error);
+                setError(error.message || "Failed to load outcomes");
             } finally {
                 setLoading(false);
             }
@@ -33,7 +36,7 @@ export default function OutcomesSection() {
     // SCROLL ANIMATION
     // ============================================================
     useEffect(() => {
-        if (loading) return;
+        if (loading || outcomes.length === 0) return;
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -72,18 +75,116 @@ export default function OutcomesSection() {
                 observer.unobserve(sectionRef.current);
             }
         };
-    }, [loading]);
+    }, [loading, outcomes]);
 
     // ============================================================
-    // LOADING STATE
+    // SKELETON LOADER
     // ============================================================
     if (loading) {
         return (
             <section className="py-24 md:py-32 bg-navy" ref={sectionRef}>
                 <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                    {/* Section Header Skeleton */}
+                    <div className="text-center mb-16">
+                        {/* Badge Skeleton */}
+                        <div className="h-6 w-32 bg-white/10 rounded-full skeleton-pulse mx-auto"></div>
+
+                        {/* Title Skeleton */}
+                        <div className="space-y-2 mt-3 mb-5">
+                            <div className="h-8 md:h-10 w-3/4 max-w-[400px] bg-white/15 rounded skeleton-pulse mx-auto"></div>
+                            <div className="h-8 md:h-10 w-1/2 max-w-[300px] bg-white/15 rounded skeleton-pulse mx-auto"></div>
+                        </div>
+
+                        {/* Description Skeleton */}
+                        <div className="max-w-[600px] mx-auto">
+                            <div className="h-4 w-4/5 bg-white/10 rounded skeleton-pulse mx-auto"></div>
+                        </div>
+                    </div>
+
+                    {/* Outcomes Grid Skeleton */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/5">
+                        {[1, 2, 3, 4].map((i) => (
+                            <div
+                                key={i}
+                                className="bg-white/5 p-9 flex flex-col"
+                            >
+                                {/* Icon Skeleton */}
+                                <div className="w-12 h-12 bg-white/10 rounded-xl skeleton-pulse mb-4"></div>
+
+                                {/* Title Skeleton */}
+                                <div className="h-5 w-3/4 bg-white/15 rounded skeleton-pulse mb-2.5"></div>
+
+                                {/* Description Skeleton */}
+                                <div className="space-y-1.5 flex-1">
+                                    <div className="h-3.5 w-full bg-white/10 rounded skeleton-pulse"></div>
+                                    <div className="h-3.5 w-5/6 bg-white/10 rounded skeleton-pulse"></div>
+                                    <div className="h-3.5 w-4/5 bg-white/10 rounded skeleton-pulse"></div>
+                                </div>
+
+                                {/* Stat Skeleton */}
+                                <div className="mt-4 h-7 w-20 bg-cyan/30 rounded skeleton-pulse"></div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Custom Skeleton Pulse Animation */}
+                <style jsx>{`
+                    .skeleton-pulse {
+                        animation: skeletonPulse 1.8s ease-in-out infinite;
+                    }
+                    
+                    @keyframes skeletonPulse {
+                        0% {
+                            opacity: 0.4;
+                        }
+                        50% {
+                            opacity: 0.7;
+                        }
+                        100% {
+                            opacity: 0.4;
+                        }
+                    }
+                `}</style>
+            </section>
+        );
+    }
+
+    // ============================================================
+    // ERROR STATE
+    // ============================================================
+    if (error) {
+        return (
+            <section className="py-24 md:py-32 bg-navy" ref={sectionRef}>
+                <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
                     <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
-                        <p className="text-white/60 mt-4">Loading outcomes...</p>
+                        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-8">
+                            <p className="text-red-400 font-semibold">⚠️ {error}</p>
+                            <button
+                                onClick={() => window.location.reload()}
+                                className="mt-4 px-6 py-2 bg-cyan text-navy rounded-lg font-semibold hover:bg-cyan-light transition-colors"
+                            >
+                                Refresh Page
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    // ============================================================
+    // EMPTY STATE
+    // ============================================================
+    if (outcomes.length === 0) {
+        return (
+            <section className="py-24 md:py-32 bg-navy" ref={sectionRef}>
+                <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div className="text-center">
+                        <div className="bg-white/5 border border-white/10 rounded-xl p-12">
+                            <h3 className="text-white text-lg font-semibold mb-2">No Outcomes Available</h3>
+                            <p className="text-white/40">Check back later for our business outcomes.</p>
+                        </div>
                     </div>
                 </div>
             </section>

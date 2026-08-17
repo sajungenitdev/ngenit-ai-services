@@ -6,7 +6,7 @@ interface IndustryCardProps {
     id: string;
     icon: string;
     name: string;
-    short: string;
+    short?: string; // Made optional with ?
 }
 
 export default function IndustryCard({ id, icon, name, short }: IndustryCardProps) {
@@ -25,9 +25,11 @@ export default function IndustryCard({ id, icon, name, short }: IndustryCardProp
                 <h3 className="text-[0.9rem] font-semibold text-navy mb-1.5 transition-all duration-300 group-hover:text-white font-plus-jakarta">
                     {name}
                 </h3>
-                <p className="text-[0.75rem] text-grey-400 transition-all duration-300 group-hover:text-white/55 flex-1">
-                    {short}
-                </p>
+                {short && (
+                    <p className="text-[0.75rem] text-grey-400 transition-all duration-300 group-hover:text-white/55 flex-1">
+                        {short}
+                    </p>
+                )}
             </div>
         </Link>
     );

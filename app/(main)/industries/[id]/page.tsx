@@ -37,13 +37,180 @@ export default function IndustryDetailPage() {
         fetchData();
     }, [industryId]);
 
+    // ============================================================
+    // SKELETON LOADER
+    // ============================================================
     if (loading) {
         return (
-            <div className="min-h-screen bg-white flex items-center justify-center">
-                <div className="text-center">
-                    <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
-                    <p className="text-grey-400 mt-4">Loading industry...</p>
-                </div>
+            <div className="min-h-screen bg-white">
+                {/* Hero Skeleton */}
+                <section className="relative bg-navy pt-40 pb-20 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-mid to-navy">
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(0,194,203,0.18)_0%,transparent_60%)]"></div>
+                    </div>
+                    <div className="container max-w-[1200px] mx-auto px-6 md:px-8 relative z-10">
+                        {/* Breadcrumb Skeleton */}
+                        <div className="flex items-center gap-2 mb-5">
+                            <div className="h-4 w-12 bg-white/10 rounded skeleton-pulse"></div>
+                            <span className="text-white/20">/</span>
+                            <div className="h-4 w-20 bg-white/20 rounded skeleton-pulse"></div>
+                            <span className="text-white/20">/</span>
+                            <div className="h-4 w-24 bg-white/20 rounded skeleton-pulse"></div>
+                        </div>
+
+                        {/* Icon Skeleton */}
+                        <div className="w-16 h-16 rounded-2xl bg-white/10 mb-5 skeleton-pulse"></div>
+
+                        {/* Title Skeleton */}
+                        <div className="space-y-3">
+                            <div className="h-10 md:h-14 w-3/4 max-w-[600px] bg-white/15 rounded-lg skeleton-pulse"></div>
+                        </div>
+
+                        {/* Description Skeleton */}
+                        <div className="space-y-2 mt-4 max-w-[640px]">
+                            <div className="h-4 w-full bg-white/10 rounded skeleton-pulse"></div>
+                            <div className="h-4 w-4/5 bg-white/10 rounded skeleton-pulse"></div>
+                            <div className="h-4 w-3/4 bg-white/10 rounded skeleton-pulse"></div>
+                        </div>
+
+                        {/* CTA Buttons Skeleton */}
+                        <div className="flex flex-wrap gap-4 mt-7">
+                            <div className="h-12 w-48 bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                            <div className="h-12 w-40 bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Content Skeleton */}
+                <section className="py-16 md:py-24 bg-white">
+                    <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                            {/* Main Content Skeleton - 2/3 */}
+                            <div className="lg:col-span-2 space-y-8">
+                                {/* Overview Skeleton */}
+                                <div>
+                                    <div className="h-8 w-64 bg-grey-200 rounded skeleton-pulse mb-4"></div>
+                                    <div className="space-y-2">
+                                        <div className="h-4 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                        <div className="h-4 w-5/6 bg-grey-100 rounded skeleton-pulse"></div>
+                                        <div className="h-4 w-4/5 bg-grey-100 rounded skeleton-pulse"></div>
+                                        <div className="h-4 w-3/4 bg-grey-100 rounded skeleton-pulse"></div>
+                                    </div>
+                                </div>
+
+                                {/* Challenges Skeleton */}
+                                <div>
+                                    <div className="h-8 w-56 bg-grey-200 rounded skeleton-pulse mb-4"></div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {[1, 2, 3, 4].map((i) => (
+                                            <div key={i} className="flex items-start gap-3.5 p-4 bg-off-white rounded-xl border border-grey-100">
+                                                <div className="w-6 h-6 rounded-full bg-red-100 shrink-0 skeleton-pulse"></div>
+                                                <div className="flex-1 space-y-1">
+                                                    <div className="h-3.5 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                                    <div className="h-3.5 w-3/4 bg-grey-100 rounded skeleton-pulse"></div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Solutions Skeleton */}
+                                <div>
+                                    <div className="h-8 w-64 bg-grey-200 rounded skeleton-pulse mb-4"></div>
+                                    <div className="space-y-3">
+                                        {[1, 2, 3].map((i) => (
+                                            <div key={i} className="flex items-start gap-3.5 p-4 bg-white border border-grey-100 rounded-xl">
+                                                <div className="w-6 h-6 rounded-full bg-cyan/10 shrink-0 skeleton-pulse"></div>
+                                                <div className="flex-1 space-y-1">
+                                                    <div className="h-4 w-48 bg-grey-200 rounded skeleton-pulse"></div>
+                                                    <div className="h-3.5 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                                    <div className="h-3.5 w-4/5 bg-grey-100 rounded skeleton-pulse"></div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Related Services Skeleton */}
+                                <div>
+                                    <div className="h-8 w-48 bg-grey-200 rounded skeleton-pulse mb-4"></div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        {[1, 2].map((i) => (
+                                            <div key={i} className="flex items-start gap-3 p-4 bg-white border border-grey-100 rounded-xl">
+                                                <div className="w-10 h-10 rounded-lg bg-grey-200 shrink-0 skeleton-pulse"></div>
+                                                <div className="flex-1 space-y-1">
+                                                    <div className="h-4 w-32 bg-grey-200 rounded skeleton-pulse"></div>
+                                                    <div className="h-3.5 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                                    <div className="h-3.5 w-2/3 bg-grey-100 rounded skeleton-pulse"></div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Sidebar Skeleton - 1/3 */}
+                            <div className="lg:col-span-1">
+                                <div className="bg-off-white rounded-2xl p-8 sticky top-24 space-y-6">
+                                    <div className="h-5 w-32 bg-grey-200 rounded skeleton-pulse"></div>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <div className="h-3 w-16 bg-grey-300 rounded skeleton-pulse mb-1"></div>
+                                            <div className="h-5 w-24 bg-grey-200 rounded skeleton-pulse"></div>
+                                        </div>
+                                        <div>
+                                            <div className="h-3 w-32 bg-grey-300 rounded skeleton-pulse mb-2"></div>
+                                            <div className="flex flex-wrap gap-1.5">
+                                                {[1, 2, 3, 4].map((i) => (
+                                                    <div key={i} className="h-7 w-16 bg-grey-200 rounded-md skeleton-pulse"></div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="pt-6 border-t border-grey-200 space-y-3">
+                                        <div className="h-12 w-full bg-cyan/30 rounded-[8px] skeleton-pulse"></div>
+                                        <div className="h-12 w-full bg-grey-200 rounded-[8px] skeleton-pulse"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Bottom CTA Skeleton */}
+                <section className="py-16 md:py-20 bg-navy-mid">
+                    <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+                            <div className="space-y-3 text-center lg:text-left">
+                                <div className="h-8 w-72 bg-white/10 rounded-lg skeleton-pulse"></div>
+                                <div className="h-4 w-64 bg-white/10 rounded skeleton-pulse"></div>
+                            </div>
+                            <div className="flex flex-col gap-3 min-w-[200px]">
+                                <div className="h-12 w-full bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                                <div className="h-12 w-full bg-white/10 rounded-[8px] skeleton-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Custom Skeleton Pulse Animation */}
+                <style jsx>{`
+                    .skeleton-pulse {
+                        animation: skeletonPulse 1.8s ease-in-out infinite;
+                    }
+                    
+                    @keyframes skeletonPulse {
+                        0% {
+                            opacity: 0.4;
+                        }
+                        50% {
+                            opacity: 0.7;
+                        }
+                        100% {
+                            opacity: 0.4;
+                        }
+                    }
+                `}</style>
             </div>
         );
     }
@@ -52,6 +219,9 @@ export default function IndustryDetailPage() {
         notFound();
     }
 
+    // ============================================================
+    // RENDER
+    // ============================================================
     return (
         <>
             {/* Page Hero */}
@@ -174,11 +344,11 @@ export default function IndustryDetailPage() {
                                         {relatedServices.map((service) => (
                                             <Link
                                                 key={service._id}
-                                                href={`/service/${service._id}`}
+                                                href={`/services/${service._id}`}
                                                 className="group flex items-start gap-3 p-4 bg-white border border-grey-100 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1"
                                             >
                                                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-navy-mid to-blue flex items-center justify-center text-lg shrink-0">
-                                                    {service.icon}
+                                                    {service.icon || '🧠'}
                                                 </div>
                                                 <div>
                                                     <h4 className="text-navy text-sm font-semibold group-hover:text-cyan transition-colors">

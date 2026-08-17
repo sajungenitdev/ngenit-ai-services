@@ -10,6 +10,7 @@ export default function IndustriesSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [industries, setIndustries] = useState<IndustryData[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         fetchIndustries();
@@ -18,18 +19,20 @@ export default function IndustriesSection() {
     const fetchIndustries = async () => {
         try {
             setLoading(true);
+            setError(null);
             const data = await getIndustries();
             // Filter only active industries for frontend
             setIndustries(data.filter(ind => ind.isActive !== false));
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error fetching industries:", error);
+            setError(error.message || "Failed to load industries");
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        if (loading) return;
+        if (loading || industries.length === 0) return;
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -68,21 +71,128 @@ export default function IndustriesSection() {
                 observer.unobserve(sectionRef.current);
             }
         };
-    }, [loading]);
+    }, [loading, industries]);
 
+    // ============================================================
+    // SKELETON LOADER
+    // ============================================================
     if (loading) {
         return (
             <section className="py-24 md:py-32 bg-off-white" id="industries" ref={sectionRef}>
                 <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                    {/* Section Header Skeleton */}
+                    <div className="text-center mb-16">
+                        {/* Badge Skeleton */}
+                        <div className="h-6 w-32 bg-cyan/20 rounded-full skeleton-pulse mx-auto"></div>
+                        
+                        {/* Title Skeleton */}
+                        <div className="space-y-2 mt-3 mb-5">
+                            <div className="h-8 md:h-10 w-3/4 max-w-[400px] bg-grey-200 rounded skeleton-pulse mx-auto"></div>
+                            <div className="h-8 md:h-10 w-1/2 max-w-[300px] bg-grey-200 rounded skeleton-pulse mx-auto"></div>
+                        </div>
+                        
+                        {/* Description Skeleton */}
+                        <div className="space-y-2 max-w-[600px] mx-auto">
+                            <div className="h-4 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                            <div className="h-4 w-5/6 bg-grey-100 rounded skeleton-pulse mx-auto"></div>
+                            <div className="h-4 w-4/5 bg-grey-100 rounded skeleton-pulse mx-auto"></div>
+                        </div>
+                    </div>
+
+                    {/* Industry Cards Grid Skeleton */}
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+                            <div
+                                key={i}
+                                className="bg-white border border-grey-100 rounded-xl p-5 text-center flex flex-col items-center h-[180px]"
+                            >
+                                {/* Icon Skeleton */}
+                                <div className="w-12 h-12 rounded-xl bg-grey-200 skeleton-pulse mb-3"></div>
+                                
+                                {/* Title Skeleton */}
+                                <div className="h-4 w-3/4 bg-grey-200 rounded skeleton-pulse mb-2"></div>
+                                
+                                {/* Description Skeleton */}
+                                <div className="space-y-1 flex-1 w-full">
+                                    <div className="h-3 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                    <div className="h-3 w-4/5 bg-grey-100 rounded skeleton-pulse mx-auto"></div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* View All Button Skeleton */}
+                    <div className="text-center mt-8">
+                        <div className="h-11 w-48 bg-grey-200 rounded-[8px] skeleton-pulse mx-auto"></div>
+                    </div>
+                </div>
+
+                {/* Custom Skeleton Pulse Animation */}
+                <style jsx>{`
+                    .skeleton-pulse {
+                        animation: skeletonPulse 1.8s ease-in-out infinite;
+                    }
+                    
+                    @keyframes skeletonPulse {
+                        0% {
+                            opacity: 0.4;
+                        }
+                        50% {
+                            opacity: 0.7;
+                        }
+                        100% {
+                            opacity: 0.4;
+                        }
+                    }
+                `}</style>
+            </section>
+        );
+    }
+
+    // ============================================================
+    // ERROR STATE
+    // ============================================================
+    if (error) {
+        return (
+            <section className="py-24 md:py-32 bg-off-white" id="industries" ref={sectionRef}>
+                <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
                     <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
-                        <p className="text-grey-400 mt-4">Loading industries...</p>
+                        <div className="bg-red-50 border border-red-200 rounded-xl p-8">
+                            <p className="text-red-600 font-semibold">⚠️ {error}</p>
+                            <button
+                                onClick={() => window.location.reload()}
+                                className="mt-4 px-6 py-2 bg-cyan text-navy rounded-lg font-semibold hover:bg-cyan-light transition-colors"
+                            >
+                                Refresh Page
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
         );
     }
 
+    // ============================================================
+    // EMPTY STATE
+    // ============================================================
+    if (industries.length === 0) {
+        return (
+            <section className="py-24 md:py-32 bg-off-white" id="industries" ref={sectionRef}>
+                <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div className="text-center">
+                        <div className="bg-white rounded-xl p-12 border border-grey-100">
+                            <h3 className="text-lg font-semibold text-navy mb-2">No Industries Available</h3>
+                            <p className="text-grey-400">Check back later for our industry solutions.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    // ============================================================
+    // RENDER
+    // ============================================================
     return (
         <section className="py-24 md:py-32 bg-off-white" id="industries" ref={sectionRef}>
             <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
@@ -111,7 +221,7 @@ export default function IndustriesSection() {
                                 id={industry.slug || industry._id!}
                                 icon={industry.icon}
                                 name={industry.name}
-                                short={industry.short}
+                                short={industry.short || industry.description}
                             />
                         </div>
                     ))}

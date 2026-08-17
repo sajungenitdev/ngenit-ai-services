@@ -3,6 +3,7 @@ export interface IndustryData {
     icon: string;
     name: string;
     slug: string;
+    description?: string;
     short: string;
     long: string;
     challenges: string[];

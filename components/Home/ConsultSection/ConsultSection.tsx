@@ -13,20 +13,23 @@ export default function ConsultSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const [data, setData] = useState<ContactPageData | null>(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [serviceOptions, setServiceOptions] = useState<ServiceOption[]>([]);
 
     // ============================================================
     // FETCH CONTACT PAGE DATA
     // ============================================================
-      useEffect(() => {
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 setLoading(true);
+                setError(null);
                 const result = await getContactPage();
                 setData(result);
                 setServiceOptions(result.serviceOptions || []);
-            } catch (error) {
+            } catch (error: any) {
                 console.error("Error fetching contact page:", error);
+                setError(error.message || "Failed to load contact data");
             } finally {
                 setLoading(false);
             }
@@ -39,7 +42,7 @@ export default function ConsultSection() {
     // SCROLL ANIMATION
     // ============================================================
     useEffect(() => {
-        if (loading) return;
+        if (loading || !data) return;
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -76,7 +79,7 @@ export default function ConsultSection() {
                 observer.unobserve(sectionRef.current);
             }
         };
-    }, [loading]);
+    }, [loading, data]);
 
     // ============================================================
     // HELPER: Get background color based on method type
@@ -118,21 +121,160 @@ export default function ConsultSection() {
     };
 
     // ============================================================
-    // LOADING STATE
+    // SKELETON LOADER
     // ============================================================
     if (loading) {
         return (
             <section className="py-24 md:py-32 bg-off-white" id="consult" ref={sectionRef}>
                 <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+                        {/* Left Side Skeleton */}
+                        <div className="space-y-4">
+                            {/* Tag Skeleton */}
+                            <div className="h-7 w-24 bg-cyan/20 rounded-full skeleton-pulse"></div>
+                            
+                            {/* Title Skeleton */}
+                            <div className="space-y-2">
+                                <div className="h-8 md:h-10 w-3/4 max-w-[400px] bg-grey-200 rounded skeleton-pulse"></div>
+                                <div className="h-8 md:h-10 w-1/2 max-w-[300px] bg-grey-200 rounded skeleton-pulse"></div>
+                            </div>
+                            
+                            {/* Description Skeleton */}
+                            <div className="space-y-2">
+                                <div className="h-4 w-full bg-grey-100 rounded skeleton-pulse"></div>
+                                <div className="h-4 w-5/6 bg-grey-100 rounded skeleton-pulse"></div>
+                                <div className="h-4 w-4/5 bg-grey-100 rounded skeleton-pulse"></div>
+                                <div className="h-4 w-3/4 bg-grey-100 rounded skeleton-pulse"></div>
+                            </div>
+
+                            {/* Contact Methods Skeleton */}
+                            <div className="space-y-3 mt-6">
+                                {[1, 2, 3].map((i) => (
+                                    <div key={i} className="flex items-center gap-4 p-4 bg-white rounded-xl border border-grey-100">
+                                        <div className="w-11 h-11 rounded-xl bg-grey-200 shrink-0 skeleton-pulse"></div>
+                                        <div className="flex-1 space-y-1.5">
+                                            <div className="h-4 w-32 bg-grey-200 rounded skeleton-pulse"></div>
+                                            <div className="h-3 w-48 bg-grey-100 rounded skeleton-pulse"></div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Right Side - Form Skeleton */}
+                        <div className="bg-white rounded-2xl p-10 shadow-md border border-grey-100">
+                            {/* Form Title Skeleton */}
+                            <div className="h-6 w-48 bg-grey-200 rounded skeleton-pulse mb-2"></div>
+                            <div className="h-4 w-64 bg-grey-100 rounded skeleton-pulse mb-6"></div>
+
+                            {/* Form Fields Skeleton */}
+                            <div className="space-y-4">
+                                {/* Row 1 */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="space-y-1.5">
+                                        <div className="h-3.5 w-20 bg-grey-200 rounded skeleton-pulse"></div>
+                                        <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <div className="h-3.5 w-24 bg-grey-200 rounded skeleton-pulse"></div>
+                                        <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                    </div>
+                                </div>
+
+                                {/* Row 2 */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="space-y-1.5">
+                                        <div className="h-3.5 w-24 bg-grey-200 rounded skeleton-pulse"></div>
+                                        <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <div className="h-3.5 w-28 bg-grey-200 rounded skeleton-pulse"></div>
+                                        <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                    </div>
+                                </div>
+
+                                {/* Row 3 */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="space-y-1.5">
+                                        <div className="h-3.5 w-16 bg-grey-200 rounded skeleton-pulse"></div>
+                                        <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <div className="h-3.5 w-28 bg-grey-200 rounded skeleton-pulse"></div>
+                                        <div className="h-11 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                    </div>
+                                </div>
+
+                                {/* Message */}
+                                <div className="space-y-1.5">
+                                    <div className="h-3.5 w-28 bg-grey-200 rounded skeleton-pulse"></div>
+                                    <div className="h-28 w-full bg-grey-100 rounded-[8px] skeleton-pulse"></div>
+                                </div>
+
+                                {/* Consent */}
+                                <div className="flex gap-2.5 items-start">
+                                    <div className="w-4 h-4 bg-grey-200 rounded skeleton-pulse mt-1"></div>
+                                    <div className="flex-1 space-y-1">
+                                        <div className="h-3 w-48 bg-grey-100 rounded skeleton-pulse"></div>
+                                        <div className="h-3 w-32 bg-grey-100 rounded skeleton-pulse"></div>
+                                    </div>
+                                </div>
+
+                                {/* Submit Button */}
+                                <div className="h-14 w-full bg-cyan/30 rounded-[8px] skeleton-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Custom Skeleton Pulse Animation */}
+                <style jsx>{`
+                    .skeleton-pulse {
+                        animation: skeletonPulse 1.8s ease-in-out infinite;
+                    }
+                    
+                    @keyframes skeletonPulse {
+                        0% {
+                            opacity: 0.4;
+                        }
+                        50% {
+                            opacity: 0.7;
+                        }
+                        100% {
+                            opacity: 0.4;
+                        }
+                    }
+                `}</style>
+            </section>
+        );
+    }
+
+    // ============================================================
+    // ERROR STATE
+    // ============================================================
+    if (error) {
+        return (
+            <section className="py-24 md:py-32 bg-off-white" id="consult" ref={sectionRef}>
+                <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
                     <div className="text-center">
-                        <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
-                        <p className="text-grey-400 mt-4">Loading...</p>
+                        <div className="bg-red-50 border border-red-200 rounded-xl p-8">
+                            <p className="text-red-600 font-semibold">⚠️ {error}</p>
+                            <button
+                                onClick={() => window.location.reload()}
+                                className="mt-4 px-6 py-2 bg-cyan text-navy rounded-lg font-semibold hover:bg-cyan-light transition-colors"
+                            >
+                                Refresh Page
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
         );
     }
 
+    // ============================================================
+    // DON'T RENDER IF NOT ACTIVE
+    // ============================================================
     if (!data || !data.isActive) {
         return null;
     }
@@ -201,7 +343,7 @@ export default function ConsultSection() {
                             <ContactForm
                                 formData={data.form}
                                 formFields={data.formFields}
-                                serviceOptions={[]} // You can pass service options here if needed
+                                serviceOptions={serviceOptions}
                                 className="w-full"
                             />
                         </div>

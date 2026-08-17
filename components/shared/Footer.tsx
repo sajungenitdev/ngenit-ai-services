@@ -16,6 +16,7 @@ export default function Footer() {
     const [services, setServices] = useState<Service[]>([]);
     const [industries, setIndustries] = useState<Industry[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     // ============================================================
     // FETCH SERVICES AND INDUSTRIES
@@ -23,14 +24,17 @@ export default function Footer() {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true);
+                setError(null);
                 const [servicesData, industriesData] = await Promise.all([
                     getServices(),
                     getIndustries(),
                 ]);
                 setServices(servicesData.filter(s => s.isActive !== false));
                 setIndustries(industriesData.filter(i => i.isActive !== false));
-            } catch (error) {
+            } catch (error: any) {
                 console.error("Error fetching footer data:", error);
+                setError(error.message || "Failed to load footer data");
             } finally {
                 setLoading(false);
             }
@@ -40,7 +44,7 @@ export default function Footer() {
     }, []);
 
     // ============================================================
-    // OFFICES DATA (Can also be fetched from API if needed)
+    // OFFICES DATA
     // ============================================================
     const offices = [
         { city: "Dhaka", country: "Bangladesh" },
@@ -70,27 +74,49 @@ export default function Footer() {
     ];
 
     // ============================================================
-    // LOADING STATE
+    // SKELETON LOADER
     // ============================================================
     if (loading) {
         return (
             <footer className="bg-navy border-t border-white/5">
                 <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 py-16 lg:py-20">
-                        {/* Skeleton loading */}
                         {[1, 2, 3, 4].map((i) => (
-                            <div key={i} className="animate-pulse">
-                                <div className="h-4 w-24 bg-white/10 rounded mb-5"></div>
+                            <div key={i} className="space-y-4">
+                                {/* Header Skeleton */}
+                                <div className="h-4 w-24 bg-white/10 rounded skeleton-pulse"></div>
+                                
+                                {/* Links Skeleton */}
                                 <div className="space-y-3">
-                                    <div className="h-3 w-32 bg-white/5 rounded"></div>
-                                    <div className="h-3 w-28 bg-white/5 rounded"></div>
-                                    <div className="h-3 w-36 bg-white/5 rounded"></div>
-                                    <div className="h-3 w-24 bg-white/5 rounded"></div>
+                                    <div className="h-3 w-32 bg-white/10 rounded skeleton-pulse"></div>
+                                    <div className="h-3 w-28 bg-white/10 rounded skeleton-pulse"></div>
+                                    <div className="h-3 w-36 bg-white/10 rounded skeleton-pulse"></div>
+                                    <div className="h-3 w-24 bg-white/10 rounded skeleton-pulse"></div>
+                                    <div className="h-3 w-30 bg-white/10 rounded skeleton-pulse"></div>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
+
+                {/* Custom Skeleton Pulse Animation */}
+                <style jsx>{`
+                    .skeleton-pulse {
+                        animation: skeletonPulse 1.8s ease-in-out infinite;
+                    }
+                    
+                    @keyframes skeletonPulse {
+                        0% {
+                            opacity: 0.4;
+                        }
+                        50% {
+                            opacity: 0.7;
+                        }
+                        100% {
+                            opacity: 0.4;
+                        }
+                    }
+                `}</style>
             </footer>
         );
     }
