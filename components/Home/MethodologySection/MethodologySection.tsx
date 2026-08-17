@@ -21,8 +21,8 @@ export default function MethodologySection() {
                 const data = await getMethodology();
                 // Filter active steps and sort by number
                 const activeSteps = data
-                    .filter(step => step.isActive !== false)
-                    .sort((a, b) => (a.order || a.number) - (b.order || b.number));
+                    .filter((step) => step.isActive !== false)
+                    .sort((a, b) => (a.number ?? 0) - (b.number ?? 0));
                 setSteps(activeSteps);
             } catch (error: any) {
                 console.error("Error fetching methodology:", error);
