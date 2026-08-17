@@ -309,7 +309,8 @@ export default function ServicesPage() {
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
                         <div className="text-center lg:text-left">
                             <h2 className="font-plus-jakarta font-bold text-[clamp(1.5rem,2.5vw,2.2rem)] leading-[1.15] text-white max-w-[560px]">
-                                Need a Custom AI Solution?
+                                Not sure which service fits
+                                your business?
                             </h2>
                             <p className="text-white/60 text-[1rem] mt-3 max-w-[460px] leading-relaxed">
                                 Tell us about your specific requirements and we will scope a tailored solution.

@@ -59,13 +59,24 @@ interface ContactFormProps {
     onError?: (error: string) => void;
 }
 
-export default function ContactForm({ 
-    formData, 
-    formFields, 
+// ✅ FALLBACK SERVICES - Will show if API returns empty
+const FALLBACK_SERVICES = [
+    { id: '1', name: 'AI Consulting & Strategy', displayName: 'AI Consulting & Strategy' },
+    { id: '2', name: 'Generative AI Solutions', displayName: 'Generative AI Solutions' },
+    { id: '3', name: 'Intelligent Automation', displayName: 'Intelligent Automation' },
+    { id: '4', name: 'Data Analytics & Machine Learning', displayName: 'Data Analytics & ML' },
+    { id: '5', name: 'Computer Vision', displayName: 'Computer Vision' },
+    { id: '6', name: 'Industrial AI', displayName: 'Industrial AI' },
+    { id: '7', name: 'AI Agents & Assistants', displayName: 'AI Agents & Assistants' },
+];
+
+export default function ContactForm({
+    formData,
+    formFields,
     serviceOptions = [],
     className = "",
     onSuccess,
-    onError 
+    onError
 }: ContactFormProps) {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -80,6 +91,13 @@ export default function ContactForm({
         message: '',
         consent: false,
     });
+
+    // ✅ Use fallback services if serviceOptions is empty
+    const displayServices = serviceOptions.length > 0 ? serviceOptions : FALLBACK_SERVICES;
+
+    // ✅ Debug log
+    console.log('📋 ContactForm - serviceOptions from API:', serviceOptions);
+    console.log('📋 ContactForm - displayServices:', displayServices);
 
     // ============================================================
     // FORM HANDLERS
@@ -122,7 +140,7 @@ export default function ContactForm({
             if (result.success) {
                 // Dismiss loading toast
                 toast.dismiss(loadingToastId);
-                
+
                 // Show success toast
                 toast.success(result.message || formData.successMessage, {
                     icon: '✅',
@@ -152,16 +170,16 @@ export default function ContactForm({
         } catch (error: any) {
             // Dismiss loading toast
             toast.dismiss(loadingToastId);
-            
+
             const errorMessage = error.message || 'Failed to submit form. Please try again.';
             setFormError(errorMessage);
-            
+
             // Show error toast
             toast.error(errorMessage, {
                 icon: '❌',
                 duration: 6000,
             });
-            
+
             if (onError) onError(errorMessage);
         } finally {
             setIsSubmitting(false);
@@ -285,6 +303,8 @@ export default function ContactForm({
                             ))}
                         </select>
                     </div>
+
+                    {/* ✅ Service Dropdown with Fallback */}
                     <div>
                         <label className="block text-[0.82rem] font-semibold text-grey-800 mb-1.5">
                             {formFields.service.label} {formFields.service.required && '*'}
@@ -298,15 +318,20 @@ export default function ContactForm({
                             disabled={isSubmitting}
                         >
                             <option value="">{formFields.service.placeholder}</option>
-                            {serviceOptions.map((option) => (
+
+                            {/* ✅ Show services (API or Fallback) */}
+                            {displayServices.map((option) => (
                                 <option key={option.id} value={option.id}>
                                     {option.displayName || option.name}
                                 </option>
                             ))}
+
                             <option value="not-sure">Not sure — need advice</option>
                         </select>
                         <p className="text-xs text-grey-400 mt-1">
-                            Service options are loaded from the database
+                            {displayServices.length > 0
+                                ? `${displayServices.length} services available`
+                                : 'Loading services...'}
                         </p>
                     </div>
                 </div>
@@ -352,13 +377,12 @@ export default function ContactForm({
                 <button
                     type="submit"
                     disabled={isSubmitting || formSubmitted}
-                    className={`w-full py-4 rounded-[8px] font-semibold text-[1.05rem] border-2 border-transparent transition-all duration-200 cursor-pointer ${
-                        formSubmitted
+                    className={`w-full py-4 rounded-[8px] font-semibold text-[1.05rem] border-2 border-transparent transition-all duration-200 cursor-pointer ${formSubmitted
                             ? 'bg-[#28CA41] text-white'
                             : isSubmitting
-                            ? 'bg-grey-300 text-grey-600 cursor-not-allowed'
-                            : 'bg-cyan text-navy shadow-[0_4px_20px_rgba(0,194,203,0.3)] hover:bg-cyan-light hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,194,203,0.4)]'
-                    }`}
+                                ? 'bg-grey-300 text-grey-600 cursor-not-allowed'
+                                : 'bg-cyan text-navy shadow-[0_4px_20px_rgba(0,194,203,0.3)] hover:bg-cyan-light hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,194,203,0.4)]'
+                        }`}
                 >
                     {isSubmitting ? (
                         <>
