@@ -151,7 +151,7 @@ export default function Footer() {
                             </span>
                         </div>
 
-                        <p className="text-white/40 text-sm leading-relaxed max-w-[280px]">
+                        <p className="text-white/60 text-sm leading-relaxed max-w-[280px]">
                             Practical AI Solutions for Business, Industry and Operations.
                             Serving enterprise, government and industrial organizations since 2009.
                         </p>
@@ -177,7 +177,7 @@ export default function Footer() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label={social.label}
-                                    className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/40 text-sm transition-all duration-300 hover:bg-white/10 hover:text-white hover:border-white/30 hover:scale-105 hover:-translate-y-0.5"
+                                    className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/60 text-sm transition-all duration-300 hover:bg-white/10 hover:text-white hover:border-white/30 hover:scale-105 hover:-translate-y-0.5"
                                 >
                                     {social.icon}
                                 </a>
@@ -196,7 +196,7 @@ export default function Footer() {
                                     <li key={service._id}>
                                         <Link
                                             href={`/service/${service.slug || service._id}`}
-                                            className="text-white/40 text-sm transition-all duration-300 hover:text-cyan hover:pl-2 hover:translate-x-0.5 inline-block"
+                                            className="text-white/60 text-sm transition-all duration-300 hover:text-cyan hover:pl-2 hover:translate-x-0.5 inline-block"
                                         >
                                             {service.name}
                                         </Link>
@@ -219,7 +219,7 @@ export default function Footer() {
                                     <li key={industry._id}>
                                         <Link
                                             href={`/industries/${industry.slug || industry._id}`}
-                                            className="text-white/40 text-sm transition-all duration-300 hover:text-cyan hover:pl-2 hover:translate-x-0.5 inline-block"
+                                            className="text-white/60 text-sm transition-all duration-300 hover:text-cyan hover:pl-2 hover:translate-x-0.5 inline-block"
                                         >
                                             {industry.name}
                                         </Link>
@@ -228,14 +228,6 @@ export default function Footer() {
                             ) : (
                                 <li className="text-white/20 text-sm">No industries available</li>
                             )}
-                            <li>
-                                <Link
-                                    href="/industries"
-                                    className="text-cyan/60 text-sm font-medium transition-all duration-300 hover:text-cyan hover:pl-2 hover:translate-x-0.5 inline-block"
-                                >
-                                    View All Industries →
-                                </Link>
-                            </li>
                         </ul>
                     </div>
 
@@ -249,7 +241,7 @@ export default function Footer() {
                                 <li key={index}>
                                     <Link
                                         href={item.href}
-                                        className="text-white/40 text-sm transition-all duration-300 hover:text-cyan hover:pl-2 hover:translate-x-0.5 inline-block"
+                                        className="text-white/60 text-sm transition-all duration-300 hover:text-cyan hover:pl-2 hover:translate-x-0.5 inline-block"
                                     >
                                         {item.label}
                                     </Link>
@@ -262,7 +254,7 @@ export default function Footer() {
                 {/* Bottom Bar */}
                 <div className="py-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-white/25 text-xs text-center sm:text-left">
-                        © {currentYear} <span className="text-white/40">NGEN IT LIMITED</span>. All rights reserved.
+                        © {currentYear} <span className="text-white/60">NGEN IT LIMITED</span>. All rights reserved.
                         Serving Bangladesh, UK, Singapore, Portugal &amp; the Middle East.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4 sm:gap-6">

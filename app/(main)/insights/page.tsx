@@ -236,7 +236,7 @@ export default function InsightsPage() {
                         Insights &amp; Blog
                     </span>
                     <h1 className="text-white text-[clamp(2rem,4vw,2.9rem)] font-extrabold font-plus-jakarta leading-[1.15] mt-4">
-                        AI Insights for<br />Business Leaders
+                        AI Insights for Business Leaders
                     </h1>
                     <p className="text-white/60 text-[1.05rem] max-w-[640px] leading-relaxed mt-4">
                         Practical thinking on AI strategy, implementation and results — written for decision-makers, not data scientists.

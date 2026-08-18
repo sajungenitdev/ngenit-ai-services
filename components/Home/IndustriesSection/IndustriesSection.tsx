@@ -84,13 +84,13 @@ export default function IndustriesSection() {
                     <div className="text-center mb-16">
                         {/* Badge Skeleton */}
                         <div className="h-6 w-32 bg-cyan/20 rounded-full skeleton-pulse mx-auto"></div>
-                        
+
                         {/* Title Skeleton */}
                         <div className="space-y-2 mt-3 mb-5">
                             <div className="h-8 md:h-10 w-3/4 max-w-[400px] bg-grey-200 rounded skeleton-pulse mx-auto"></div>
                             <div className="h-8 md:h-10 w-1/2 max-w-[300px] bg-grey-200 rounded skeleton-pulse mx-auto"></div>
                         </div>
-                        
+
                         {/* Description Skeleton */}
                         <div className="space-y-2 max-w-[600px] mx-auto">
                             <div className="h-4 w-full bg-grey-100 rounded skeleton-pulse"></div>
@@ -108,10 +108,10 @@ export default function IndustriesSection() {
                             >
                                 {/* Icon Skeleton */}
                                 <div className="w-12 h-12 rounded-xl bg-grey-200 skeleton-pulse mb-3"></div>
-                                
+
                                 {/* Title Skeleton */}
                                 <div className="h-4 w-3/4 bg-grey-200 rounded skeleton-pulse mb-2"></div>
-                                
+
                                 {/* Description Skeleton */}
                                 <div className="space-y-1 flex-1 w-full">
                                     <div className="h-3 w-full bg-grey-100 rounded skeleton-pulse"></div>

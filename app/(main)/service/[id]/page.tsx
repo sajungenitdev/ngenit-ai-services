@@ -294,7 +294,7 @@ export default function ServiceDetailPage() {
                                                 key={index}
                                                 className="bg-white border border-grey-100 rounded-xl p-4 text-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1"
                                             >
-                                                <div className="text-navy text-xl font-extrabold font-plus-jakarta">
+                                                <div className="text-blue text-xl font-extrabold font-plus-jakarta">
                                                     {benefit.label}
                                                 </div>
                                                 <div className="text-grey-400 text-xs mt-1">
@@ -342,7 +342,7 @@ export default function ServiceDetailPage() {
                                                 key={index}
                                                 className="flex items-start gap-3.5 p-4 bg-white border border-grey-100 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
                                             >
-                                                <div className="w-6 h-6 rounded-full bg-blue/10 flex items-center justify-center shrink-0 text-blue font-extrabold text-sm">
+                                                <div className="w-6 h-6 rounded-full bg-cyan/10 flex items-center justify-center shrink-0 text-cyan font-extrabold text-sm">
                                                     →
                                                 </div>
                                                 <p className="text-grey-600 text-sm leading-relaxed">

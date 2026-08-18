@@ -324,10 +324,10 @@ export default function UseCasesPage() {
                                 >
                                     {/* Tags */}
                                     <div className="flex flex-wrap gap-1.5 mb-3.5">
-                                        <span className="px-2.5 py-1 rounded-md bg-off-white text-grey-600 text-[0.72rem] font-medium">
+                                        <span className="px-2.5 py-1 rounded-md bg-off-white text-gray-600 text-[0.72rem] font-medium">
                                             {useCase.industry}
                                         </span>
-                                        <span className="px-2.5 py-1 rounded-md bg-blue/10 text-blue text-[0.72rem] font-medium">
+                                        <span className="px-2.5 py-1 rounded-md bg-off-white text-gray-600 text-[0.72rem] font-medium">
                                             {useCase.service}
                                         </span>
                                     </div>

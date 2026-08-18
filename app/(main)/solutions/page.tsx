@@ -215,7 +215,7 @@ export default function SolutionsPage() {
                             AI Solutions
                         </span>
                         <h1 className="text-white text-[clamp(2rem,4vw,2.9rem)] font-extrabold font-plus-jakarta leading-[1.15] mt-4">
-                            Featured AI Solutions,<br />Ready to Deploy
+                            Featured AI Solutions,Ready to Deploy
                         </h1>
                         <p className="text-white/60 text-[1.05rem] max-w-[640px] leading-relaxed mt-4">
                             Packaged, proven AI solutions designed for rapid implementation and measurable results across industries.
@@ -300,7 +300,7 @@ export default function SolutionsPage() {
                         AI Solutions
                     </span>
                     <h1 className="text-white text-[clamp(2rem,4vw,2.9rem)] font-extrabold font-plus-jakarta leading-[1.15] mt-4">
-                        Featured AI Solutions,<br />Ready to Deploy
+                        Featured AI Solutions,Ready to Deploy
                     </h1>
                     <p className="text-white/60 text-[1.05rem] max-w-[640px] leading-relaxed mt-4">
                         Packaged, proven AI solutions designed for rapid implementation and measurable results across industries.
