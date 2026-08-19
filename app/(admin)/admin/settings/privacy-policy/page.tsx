@@ -29,6 +29,9 @@ interface PrivacyPolicy {
     version: number;
     publishedAt?: string;
     lastUpdated?: string;
+    updatedBy?: {
+        fullName?: string;
+    };
     metadata?: {
         wordCount: number;
         characterCount: number;

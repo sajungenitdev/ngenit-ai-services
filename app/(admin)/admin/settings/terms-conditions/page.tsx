@@ -27,6 +27,9 @@ interface TermsConditions {
     content: string;
     status: "draft" | "published" | "archived";
     version: number;
+    updatedBy?: {
+        fullName?: string;
+    };
     publishedAt?: string;
     lastUpdated?: string;
     metadata?: {
