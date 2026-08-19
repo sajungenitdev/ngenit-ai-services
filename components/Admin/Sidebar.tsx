@@ -120,6 +120,11 @@ const menuItems: MenuItem[] = [
         icon: <Settings className="w-4 h-4" />,
         label: "Settings",
         href: "/admin/settings",
+        subItems: [
+            { icon: <Plus className="w-3.5 h-3.5" />, label: "Cookie Policy", href: "/admin/settings/cookie-policy" },
+            { icon: <Plus className="w-3.5 h-3.5" />, label: "Privacy Policy", href: "/admin/settings/privacy-policy" },
+            { icon: <Plus className="w-3.5 h-3.5" />, label: "Terms & Conditions", href: "/admin/settings/terms-conditions" },
+        ],
     },
 ];
 

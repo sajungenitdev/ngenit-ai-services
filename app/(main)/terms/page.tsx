@@ -1,40 +1,110 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function TermsOfServicePage() {
+interface TermsConditions {
+    _id?: string;
+    title: string;
+    content: string;
+    version: number;
+    publishedAt?: string;
+}
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+
+export default function TermsConditionsPage() {
+    const [policy, setPolicy] = useState<TermsConditions | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        fetchPolicy();
+    }, []);
+
+    const fetchPolicy = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${API_URL}/terms-conditions/public`);
+            const data = await response.json();
+
+            if (data.success && data.data) {
+                setPolicy(data.data);
+            } else {
+                setError("Terms & Conditions not found");
+            }
+        } catch (error) {
+            console.error("Error fetching terms:", error);
+            setError("Failed to load terms & conditions");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const currentDate = new Date().toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
     });
 
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="w-12 h-12 border-4 border-cyan border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p className="text-gray-500 mt-4">Loading terms & conditions...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error || !policy) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="text-6xl mb-4">📜</div>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">Terms & Conditions Not Found</h2>
+                    <p className="text-gray-500">{error || "Content not available."}</p>
+                    <button
+                        onClick={fetchPolicy}
+                        className="mt-4 px-6 py-2 bg-cyan text-navy rounded-lg font-semibold hover:bg-cyan-light transition"
+                    >
+                        Retry
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <>
-            {/* Page Hero */}
+        <div className="min-h-screen bg-gray-50">
+            {/* Hero Section */}
             <section className="relative bg-navy pt-40 pb-16 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy-mid to-navy">
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_80%_20%,rgba(0,194,203,0.18)_0%,transparent_60%)]"></div>
                 </div>
                 <div className="container max-w-[1200px] mx-auto px-6 md:px-8 relative z-10">
-                    {/* Breadcrumb */}
                     <div className="flex items-center gap-2 text-white/40 text-sm mb-5 flex-wrap">
                         <Link href="/" className="hover:text-cyan transition-colors">Home</Link>
                         <span>/</span>
-                        <span className="text-white/80">Terms of Service</span>
+                        <span className="text-white/80">Terms & Conditions</span>
                     </div>
-
                     <span className="inline-block px-3.5 py-1.5 rounded-full text-[0.78rem] font-semibold tracking-wide uppercase bg-cyan/15 text-cyan">
                         Legal
                     </span>
                     <h1 className="text-white text-[clamp(2rem,4vw,2.9rem)] font-extrabold font-plus-jakarta leading-[1.15] mt-4">
-                        Terms of Service
+                        {policy.title || "Terms & Conditions"}
                     </h1>
                     <p className="text-white/60 text-[1.05rem] max-w-[640px] leading-relaxed mt-4">
-                        Please read these terms carefully before using our services.
+                        Read the terms and conditions that govern your use of NGEN IT's services and website.
                     </p>
                     <p className="text-white/40 text-sm mt-2">
-                        Last Updated: {currentDate}
+                        Last Updated: {policy.publishedAt ? new Date(policy.publishedAt).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        }) : currentDate}
+                        {policy.version > 1 && ` · Version ${policy.version}`}
                     </p>
                 </div>
             </section>
@@ -43,301 +113,67 @@ export default function TermsOfServicePage() {
             <section className="py-16 md:py-24 bg-white">
                 <div className="container max-w-[1200px] mx-auto px-6 md:px-8">
                     <div className="prose prose-lg prose-grey max-w-none">
-                        {/* Introduction */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta mt-0">
-                            1. Introduction
-                        </h2>
-                        <p className="text-black">
-                            Welcome to NGEN IT LIMITED ("we", "our", "us"). These Terms of Service
-                            ("Terms") govern your use of our website and services. By accessing or
-                            using our website, you agree to be bound by these Terms.
-                        </p>
-                        <p className="text-black">
-                            If you do not agree with any part of these Terms, please do not use our
-                            website or services.
-                        </p>
+                        <div
+                            dangerouslySetInnerHTML={{ __html: policy.content }}
+                            className="policy-content"
+                        />
 
-                        {/* Acceptance of Terms */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            2. Acceptance of Terms
-                        </h2>
-                        <p className="text-black">
-                            By using our website and services, you acknowledge that you have read,
-                            understood, and agree to be bound by these Terms. These Terms apply to
-                            all visitors, users, and others who access or use the website.
-                        </p>
-                        <p className="text-black">
-                            We reserve the right to update or modify these Terms at any time without
-                            prior notice. Your continued use of the website after any changes
-                            constitutes your acceptance of the new Terms.
-                        </p>
-
-                        {/* Services Provided */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            3. Services Provided
-                        </h2>
-                        <p className="text-black">
-                            NGEN IT provides AI consulting, solutions, and implementation services
-                            including but not limited to:
-                        </p>
-                        <ul className="text-gray-600 py-3">
-                            <li>AI Strategy and Consulting</li>
-                            <li>Generative AI Solutions</li>
-                            <li>Intelligent Automation</li>
-                            <li>Data Analytics and Machine Learning</li>
-                            <li>Computer Vision Solutions</li>
-                            <li>Industrial AI</li>
-                            <li>Custom AI Application Development</li>
-                        </ul>
-                        <p className="text-black">
-                            All services are subject to availability and may be modified or
-                            discontinued at our discretion.
-                        </p>
-
-                        {/* User Obligations */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            4. User Obligations
-                        </h2>
-                        <p className="text-black">When using our website and services, you agree to:</p>
-                        <ul className="text-gray-600 py-3">
-                            <li>
-                                Provide accurate and complete information when requested
-                            </li>
-                            <li>
-                                Use the website in compliance with all applicable laws and regulations
-                            </li>
-                            <li>
-                                Not engage in any activity that could harm, disable, or impair the
-                                website or its functionality
-                            </li>
-                            <li>
-                                Not attempt to gain unauthorized access to any part of the website
-                            </li>
-                            <li>
-                                Not use the website for any unlawful or fraudulent purpose
-                            </li>
-                            <li>
-                                Not transmit any viruses, malware, or harmful code
-                            </li>
-                        </ul>
-
-                        {/* Intellectual Property */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            5. Intellectual Property
-                        </h2>
-                        <p className="text-black">
-                            All content on this website, including text, graphics, logos, icons,
-                            images, software, and other materials, is the property of NGEN IT
-                            LIMITED or its content suppliers and is protected by copyright,
-                            trademark, and other intellectual property laws.
-                        </p>
-                        <p className="text-black">
-                            You may not reproduce, distribute, modify, create derivative works of,
-                            publicly display, or commercially exploit any content without our
-                            prior written consent.
-                        </p>
-
-                        {/* User Content */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            6. User Content
-                        </h2>
-                        <p className="text-black">
-                            By submitting content (including feedback, suggestions, or other
-                            information) to us, you grant NGEN IT a worldwide, perpetual,
-                            royalty-free license to use, reproduce, modify, and distribute that
-                            content for any purpose.
-                        </p>
-                        <p className="text-black">
-                            You represent and warrant that you have all necessary rights to grant
-                            this license and that your content does not infringe any third-party rights.
-                        </p>
-
-                        {/* Third-Party Links */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            7. Third-Party Links
-                        </h2>
-                        <p className="text-black">
-                            Our website may contain links to third-party websites or services that
-                            are not owned or controlled by NGEN IT. We have no control over, and
-                            assume no responsibility for, the content, privacy policies, or practices
-                            of any third-party websites.
-                        </p>
-                        <p className="text-black">
-                            We encourage you to review the terms and conditions and privacy policies
-                            of any third-party websites you visit.
-                        </p>
-
-                        {/* Disclaimer of Warranties */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            8. Disclaimer of Warranties
-                        </h2>
-                        <p className="text-black">
-                            The website and services are provided on an "AS IS" and "AS AVAILABLE" basis.
-                            NGEN IT makes no warranties, expressed or implied, regarding the
-                            operation, accuracy, reliability, or completeness of the website or its content.
-                        </p>
-                        <p className="text-black">
-                            To the fullest extent permitted by law, we disclaim all warranties,
-                            including but not limited to implied warranties of merchantability,
-                            fitness for a particular purpose, and non-infringement.
-                        </p>
-
-                        {/* Limitation of Liability */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            9. Limitation of Liability
-                        </h2>
-                        <p className="text-black">
-                            To the maximum extent permitted by law, NGEN IT shall not be liable for
-                            any indirect, incidental, special, consequential, or punitive damages,
-                            including without limitation loss of profits, data, use, goodwill, or
-                            other intangible losses, resulting from:
-                        </p>
-                        <ul className="text-gray-600 py-3">
-                            <li>Your use or inability to use the website or services</li>
-                            <li>Any unauthorized access to or use of our servers and/or personal information</li>
-                            <li>Any interruption or cessation of transmission to or from our website</li>
-                            <li>Any bugs, viruses, or other harmful code that may be transmitted</li>
-                            <li>Any errors or omissions in any content</li>
-                        </ul>
-
-                        {/* Indemnification */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            10. Indemnification
-                        </h2>
-                        <p className="text-black">
-                            You agree to indemnify and hold harmless NGEN IT, its officers, employees,
-                            agents, and affiliates from any claims, damages, losses, liabilities,
-                            and expenses arising out of your use of the website or services, your
-                            violation of these Terms, or your violation of any third-party rights.
-                        </p>
-
-                        {/* Termination */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            11. Termination
-                        </h2>
-                        <p className="text-black">
-                            We may terminate or suspend your access to the website immediately,
-                            without prior notice or liability, for any reason, including without
-                            limitation if you breach these Terms.
-                        </p>
-                        <p className="text-black">
-                            Upon termination, your right to use the website will cease immediately.
-                        </p>
-
-                        {/* Governing Law */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            12. Governing Law
-                        </h2>
-                        <p className="text-black">
-                            These Terms shall be governed and construed in accordance with the laws
-                            of Bangladesh, without regard to its conflict of law provisions.
-                        </p>
-                        <p className="text-black">
-                            Any dispute arising under these Terms shall be subject to the exclusive
-                            jurisdiction of the courts located in Dhaka, Bangladesh.
-                        </p>
-
-                        {/* Severability */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            13. Severability
-                        </h2>
-                        <p className="text-black">
-                            If any provision of these Terms is found to be unenforceable or invalid
-                            under applicable law, the remaining provisions shall remain in full
-                            force and effect.
-                        </p>
-
-                        {/* Entire Agreement */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            14. Entire Agreement
-                        </h2>
-                        <p className="text-black">
-                            These Terms constitute the entire agreement between you and NGEN IT
-                            regarding your use of the website and supersede all prior agreements
-                            and understandings.
-                        </p>
-
-                        {/* Contact Information */}
-                        <h2 className="text-2xl py-3 font-bold text-navy font-plus-jakarta">
-                            15. Contact Us
-                        </h2>
-                        <p className="text-black">
-                            If you have any questions about these Terms, please contact us:
-                        </p>
-                        <ul className="text-gray-600 py-3">
-                            <li>
-                                <strong>Email:</strong>{" "}
-                                <a
-                                    href="mailto:ai@ngenitltd.com"
-                                    className="text-cyan hover:underline"
-                                >
-                                    ai@ngenitltd.com
-                                </a>
-                            </li>
-                            <li>
-                                <strong>Phone:</strong>{" "}
-                                <a
-                                    href="tel:+8801XXXXXXXXX"
-                                    className="text-cyan hover:underline"
-                                >
-                                    +8801XXXXXXXXX
-                                </a>
-                            </li>
-                            <li>
-                                <strong>Address:</strong> NGEN IT LIMITED, Dhaka, Bangladesh
-                            </li>
-                            <li>
-                                <strong>Website:</strong>{" "}
-                                <Link href="/" className="text-cyan hover:underline">
-                                    www.ngenitltd.com
-                                </Link>
-                            </li>
-                        </ul>
-
-                        {/* Footer Note */}
-                        <div className="mt-8 p-6 bg-off-white text-black rounded-xl border border-grey-200">
+                        <div className="mt-8 p-6 text-black bg-off-white rounded-xl border border-grey-200">
                             <p className="text-sm text-grey-500">
-                                These Terms of Service were last updated on{" "}
-                                <strong>{currentDate}</strong>.
-                            </p>
-                            <p className="text-sm text-grey-500 mt-2">
-                                By continuing to use our website, you agree to these Terms of Service.
+                                These Terms & Conditions were last updated on{" "}
+                                <strong>
+                                    {policy.publishedAt ? new Date(policy.publishedAt).toLocaleDateString("en-US", {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                    }) : currentDate}
+                                </strong>
+                                {policy.version > 1 && ` (Version ${policy.version})`}
                             </p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Bottom CTA */}
-            <section className="py-16 md:py-20 relative overflow-hidden bg-gradient-to-br from-navy-mid via-navy-light to-[#1a3a8f]">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_80%_50%,rgba(0,194,203,0.18)_0%,transparent_60%)]"></div>
-                <div className="container max-w-[1200px] mx-auto px-6 md:px-8 relative z-10">
-                    <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-                        <div className="text-center lg:text-left">
-                            <h2 className="font-plus-jakarta font-bold text-[clamp(1.5rem,2.5vw,2.2rem)] leading-[1.15] text-white max-w-[560px]">
-                                Have Questions About<br />Our Terms?
-                            </h2>
-                            <p className="text-white/60 text-[1rem] mt-3 max-w-[460px] leading-relaxed">
-                                We're here to help. Reach out to us with any questions about our Terms of Service.
-                            </p>
-                        </div>
-                        <div className="flex flex-col gap-3 min-w-[200px] w-full lg:w-auto">
-                            <Link
-                                href="/contact"
-                                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-cyan text-navy shadow-[0_4px_20px_rgba(0,194,203,0.3)] hover:bg-cyan-light hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(0,194,203,0.4)]"
-                            >
-                                Contact Us
-                            </Link>
-                            <Link
-                                href="/privacy-policy"
-                                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-[8px] font-semibold text-[0.95rem] border-2 border-transparent transition-all duration-200 whitespace-nowrap bg-transparent text-white border-white/40 hover:bg-white/10 hover:border-white"
-                            >
-                                View Privacy Policy →
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </>
+            <style jsx global>{`
+                .policy-content h2 {
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    color: #1a3a8f;
+                    margin-top: 2rem;
+                    margin-bottom: 1rem;
+                }
+                .policy-content h3 {
+                    font-size: 1.25rem;
+                    font-weight: 600;
+                    color: #1a3a8f;
+                    margin-top: 1.5rem;
+                    margin-bottom: 0.75rem;
+                }
+                .policy-content p {
+                    color: #1a1a1a;
+                    line-height: 1.8;
+                    margin-bottom: 1rem;
+                }
+                .policy-content ul {
+                    color: #4a4a4a;
+                    padding-left: 1.5rem;
+                    margin-bottom: 1rem;
+                }
+                .policy-content ul li {
+                    margin-bottom: 0.5rem;
+                }
+                .policy-content a {
+                    color: #00c2cb;
+                    text-decoration: underline;
+                }
+                .policy-content a:hover {
+                    color: #00d4de;
+                }
+                .policy-content strong {
+                    color: #1a3a8f;
+                }
+            `}</style>
+        </div>
     );
 }
